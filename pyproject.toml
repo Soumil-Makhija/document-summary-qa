@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "document-summary-qa"
+version = "0.1.0"
+description = "Local PDF summaries and question answering with page provenance"
+requires-python = ">=3.11"
+dependencies = ["pypdf>=6.1,<7"]
+license = "MIT"
+
+[project.optional-dependencies]
+dev = ["reportlab>=4,<5"]
+
+[tool.setuptools.packages.find]
+include = ["pdfdesk*"]
+
+[tool.setuptools.package-data]
+pdfdesk = ["web/*"]
