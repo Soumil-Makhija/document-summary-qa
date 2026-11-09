@@ -40,6 +40,7 @@
       <section id="document-workspace" class="hidden" aria-labelledby="document-title">
         <div class="document-heading"><div><p class="eyebrow">ON YOUR DESK</p><h1 id="document-title"></h1><p id="document-meta" class="document-meta"></p></div><div class="document-actions"><a id="original-link" class="button secondary" target="_blank" rel="noopener">Open original <span aria-hidden="true">↗</span></a><button id="delete-document" class="icon-button" type="button" aria-label="Delete this document" title="Delete document">⌫</button></div></div>
         <div id="document-warnings" class="notice warning hidden" role="status"></div>
+        <p class="notice warning">AI summaries and answers are experimental. Verify claims and page citations against the original PDF.</p>
         <div class="tabs" role="tablist" aria-label="Reading tools">
           <button id="tab-summary" class="tab active" role="tab" aria-selected="true" aria-controls="panel-summary" tabindex="0" data-tab="summary">Page summaries</button>
           <button id="tab-questions" class="tab" role="tab" aria-selected="false" aria-controls="panel-questions" tabindex="-1" data-tab="questions">Ask the document</button>
@@ -64,6 +65,11 @@
 
         <section id="panel-source" class="tool-panel hidden" role="tabpanel" aria-labelledby="tab-source">
           <div class="section-intro"><div><p class="eyebrow">BACK TO THE PAGE</p><h2>The extracted source.</h2><p>Page numbers match the original PDF. Layout and reading order may differ.</p></div></div>
+          <form id="source-search-form" class="question-form"><label for="source-query">Find words in this PDF</label><input id="source-query" name="query" type="search" maxlength="2000" placeholder="e.g. design revisions" required><div class="question-footer"><span>Keyword search · works without a model</span><button id="search-source" class="button secondary" type="submit">Search pages <span aria-hidden="true">↗</span></button></div></form>
+          <p id="search-status" class="status" role="status" aria-live="polite"></p>
+          <div id="search-error" class="notice error hidden" role="alert"></div>
+          <div id="search-results" aria-live="polite"></div>
+          <h3>All extracted pages</h3>
           <div id="source-pages"></div>
         </section>
         <footer class="reading-footer">Good understanding starts with a second look. <span>Always check the original.</span></footer>

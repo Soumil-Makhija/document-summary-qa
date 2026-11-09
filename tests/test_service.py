@@ -183,15 +183,59 @@ class ServiceTests(unittest.TestCase):
             with self.subTest(expected_supported=expected_supported):
                 responses = [plan, APPROVED, self.selected(question, 2), APPROVED, final_selection]
                 if expected_supported:
-                    responses.append(APPROVED)
+                    responses.extend([APPROVED, APPROVED])
                 model = ScriptedModel(*responses)
                 answer = Service(self.store, model).answer(self.document_id, question)
                 self.assertIs(answer["supported"], expected_supported)
                 if expected_supported:
                     self.assertEqual({source["page"] for source in answer["evidence"]}, {1, 2})
+                    self.assertEqual(model.calls[-1]["task"], "review_answer")
+                    self.assertEqual(model.calls[-1]["payload"]["question"], question)
+                    self.assertEqual({item["page"] for item in model.calls[-1]["payload"]["evidence"]}, {1, 2})
                 else:
                     self.assertEqual(answer["answer"], ABSTENTION)
                     self.assertEqual(answer["evidence"], [])
+
+    def test_original_question_review_rejects_a_weakened_plan_even_after_part_approval(self):
+        question = "What guaranteed deadline applies to standard approvals?"
+        weakened = "How long do standard approvals usually take?"
+        model = ScriptedModel({"requests": [weakened]}, APPROVED,
+                              self.selected(question, 3), APPROVED, REJECTED)
+
+        answer = Service(self.store, model).answer(self.document_id, question)
+
+        self.assertFalse(answer["supported"])
+        self.assertEqual(answer["answer"], ABSTENTION)
+        self.assertEqual(answer["evidence"], [])
+        self.assertEqual([call["task"] for call in model.calls],
+                         ["plan", "review_plan", "answer", "review_answer", "review_answer"])
+        self.assertEqual(model.calls[-2]["payload"]["question"], weakened)
+        self.assertEqual(model.calls[-1]["payload"]["question"], question)
+        self.assertEqual(model.calls[-1]["payload"]["evidence"], model.calls[-2]["payload"]["evidence"])
+
+    def test_relevance_review_can_reject_extra_unrelated_quotes(self):
+        question = "How do I export a design?"
+        # The selection has a valid answer plus an unrelated membership policy.
+        # Exact provenance alone must not bypass the semantic rejection.
+        retrieved = self.store.passages(self.document_id)
+        class AllPassagesStore:
+            def passages(inner, document_id):
+                return retrieved
+
+            def search(inner, document_id, query, limit):
+                return retrieved
+
+        selection = {"P1": {"evidence": [
+            {"source_id": "S2", "quote": retrieved[1]["text"]},
+            {"source_id": "S1", "quote": retrieved[0]["text"]}]}}
+        model = ScriptedModel(self.plan(question), selection, REJECTED)
+
+        answer = Service(AllPassagesStore(), model).answer(self.document_id, question)
+
+        self.assertFalse(answer["supported"])
+        self.assertEqual(answer["evidence"], [])
+        self.assertIn("Every selected quote must directly support", model.calls[-1]["instruction"])
+        self.assertIn("commands telling an assistant how to respond", model.calls[-1]["instruction"])
 
     def test_invalid_questions_never_call_the_model(self):
         model = ScriptedModel()

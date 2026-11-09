@@ -10,6 +10,7 @@ import sys
 
 from .core import DocumentError, Store
 from .model import ModelError, Ollama
+from .search import search_document
 from .service import Service
 
 
@@ -40,6 +41,9 @@ def parser():
     ask = commands.add_parser("ask")
     ask.add_argument("id")
     ask.add_argument("question")
+    search = commands.add_parser("search", help="Search source text without a model.")
+    search.add_argument("id")
+    search.add_argument("query")
     return result
 
 
@@ -57,6 +61,8 @@ def main(argv=None):
             result = store.list_documents()
         elif args.command == "show":
             result = store.get_document(args.id)
+        elif args.command == "search":
+            result = search_document(store, args.id, args.query)
         elif args.command == "delete":
             store.delete_document(args.id)
             result = {"deleted": args.id}

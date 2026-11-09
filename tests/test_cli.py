@@ -53,6 +53,35 @@ class CLITests(unittest.TestCase):
             self.assertFalse(json.loads(output)["supported"])
             service.return_value.answer.assert_called_with(document_id, "What evidence?")
 
+    def test_cli_search_returns_exact_source_with_original_page_without_a_model(self):
+        self.source.write_bytes(pdf_bytes(["Launch is June 2.", "Budget is 42 dollars."]))
+        with patch("pdfdesk.cli.Ollama", side_effect=AssertionError("Search must not need a model")):
+            document_id = json.loads(self.invoke(["import", str(self.source)])[1])["id"]
+            status, output, error = self.invoke(["search", document_id, "  budget  "])
+            self.assertEqual((status, error), (0, ""))
+            result = json.loads(output)
+            self.assertEqual(result["document_id"], document_id)
+            self.assertEqual(result["query"], "budget")
+            self.assertEqual(len(result["results"]), 1)
+            passage = result["results"][0]
+            self.assertEqual(passage["id"], "p2-s1")
+            self.assertEqual(passage["page"], 2)
+            self.assertEqual(passage["text"], "Budget is 42 dollars.")
+            self.assertGreater(passage["score"], 0)
+            self.assertEqual(passage["url"], f"/api/documents/{document_id}/file#page=2")
+            self.assertEqual(json.loads(self.invoke(["search", document_id, "unicorn"])[1])["results"], [])
+
+    def test_cli_search_rejects_invalid_queries_and_missing_documents(self):
+        document_id = json.loads(self.invoke(["import", str(self.source)])[1])["id"]
+        with patch("pdfdesk.cli.Ollama", side_effect=AssertionError("Search must not need a model")):
+            for query in ["", " \t ", "x" * 2001]:
+                with self.subTest(query_length=len(query)):
+                    status, output, error = self.invoke(["search", document_id, query])
+                    self.assertEqual((status, output), (1, ""))
+                    self.assertIn("search query between", error)
+            self.assertEqual(self.invoke(["search", "a" * 32, "budget"]),
+                             (1, "", "Document not found.\n"))
+
     def test_cli_reports_missing_files_documents_and_model_failures(self):
         status, output, error = self.invoke(["import", str(self.root / "missing.pdf")])
         self.assertEqual(status, 1)

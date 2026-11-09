@@ -16,3 +16,11 @@ jobs:
       - run: python -m pip install -e '.[dev]'
       - run: python -m unittest discover -s tests -v
       - run: python -m compileall -q pdfdesk tests
+      - name: Document-switching UI regression
+        run: node tools/test_ui_state.cjs
+      - name: Verify a fresh wheel installation
+        run: |
+          python -m pip wheel --no-deps . --wheel-dir dist
+          python -m venv "${{ runner.temp }}/pdfdesk-installed"
+          "${{ runner.temp }}/pdfdesk-installed/bin/python" -m pip install dist/*.whl
+          "${{ runner.temp }}/pdfdesk-installed/bin/python" -I tools/smoke_installed.py

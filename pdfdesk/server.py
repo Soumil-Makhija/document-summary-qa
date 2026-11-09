@@ -8,10 +8,11 @@ import json
 import re
 import socket
 import threading
-from urllib.parse import unquote, urlsplit
+from urllib.parse import parse_qs, unquote, urlsplit
 
 from .core import DocumentError, MAX_BYTES
 from .model import ModelError
+from .search import search_document
 from .service import Service
 
 
@@ -158,7 +159,7 @@ class DeskHandler(BaseHTTPRequestHandler):
                 filename = unquote(self.headers.get("X-Filename", "document.pdf"))
                 self._send(201, self.server.store.import_pdf(body, filename))
                 return
-        match = re.fullmatch(r"/api/documents/([a-f0-9]{32})(?:/(file|passages|summary|answer))?", path)
+        match = re.fullmatch(r"/api/documents/([a-f0-9]{32})(?:/(file|passages|search|summary|answer))?", path)
         if match:
             document_id, action = match.groups()
             if method == "GET" and action is None:
@@ -174,6 +175,12 @@ class DeskHandler(BaseHTTPRequestHandler):
                 return
             if method == "GET" and action == "passages":
                 self._send(200, self.server.store.passages(document_id))
+                return
+            if method == "GET" and action == "search":
+                queries = parse_qs(urlsplit(self.path).query, keep_blank_values=True, max_num_fields=10).get("q", [])
+                if len(queries) != 1:
+                    raise ValueError("Provide exactly one search query in q.")
+                self._send(200, search_document(self.server.store, document_id, queries[0]))
                 return
             if method == "POST" and action in {"summary", "answer"}:
                 value = self._json_body()

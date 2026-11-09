@@ -5,6 +5,7 @@ import tempfile
 import threading
 import unittest
 from unittest.mock import patch
+from urllib.parse import quote
 
 from pdfdesk.core import MAX_BYTES, Store
 from pdfdesk.model import ModelError
@@ -94,6 +95,52 @@ class HTTPTests(unittest.TestCase):
             self.assertEqual(headers["X-Content-Type-Options"], "nosniff")
             self.assertIn("script-src 'self'", headers["Content-Security-Policy"])
             self.assertNotIn("Access-Control-Allow-Origin", headers)
+
+    def test_search_returns_source_page_and_original_link_without_model_access(self):
+        document, _ = self.upload()
+        route = f"/api/documents/{document['id']}/search"
+        with patch.object(self.server.model, "health", side_effect=AssertionError("Search must not need a model")), \
+             patch.object(self.server.service, "answer", side_effect=AssertionError("Search must not generate an answer")):
+            # Source search also remains usable while an inference is active.
+            self.server.inference_slot.acquire()
+            try:
+                status, _, body = self.request("GET", route + "?q=%20budget%20")
+            finally:
+                self.server.inference_slot.release()
+            self.assertEqual(status, 200)
+            result = json.loads(body)
+            self.assertEqual(result["document_id"], document["id"])
+            self.assertEqual(result["query"], "budget")
+            self.assertEqual(len(result["results"]), 1)
+            passage = result["results"][0]
+            self.assertEqual(passage["id"], "p2-s1")
+            self.assertEqual(passage["page"], 2)
+            self.assertEqual(passage["text"], "Budget is 42 dollars.")
+            self.assertGreater(passage["score"], 0)
+            self.assertEqual(passage["url"], f"/api/documents/{document['id']}/file#page=2")
+            self.assertEqual(json.loads(self.request("GET", route + "?q=unicorn")[2])["results"], [])
+
+    def test_search_rejects_missing_blank_duplicate_and_oversized_queries(self):
+        document, _ = self.upload()
+        route = f"/api/documents/{document['id']}/search"
+        for suffix in ["", "?q=", "?q=%20%09", "?q=budget&q=launch", "?q=" + "x" * 2001]:
+            with self.subTest(suffix_length=len(suffix)):
+                status, _, body = self.request("GET", route + suffix)
+                self.assertEqual(status, 400)
+                self.assertIn("error", json.loads(body))
+        self.assertEqual(self.request("GET", "/api/documents/" + "a" * 32 + "/search?q=budget")[0], 404)
+
+    def test_search_percent_encoded_unicode_and_result_limit(self):
+        document = self.store.import_pdf(pdf_bytes(["Budget is 42 dollars."] * 14), "long.pdf")
+        route = f"/api/documents/{document['id']}/search"
+        status, _, body = self.request("GET", route + "?q=" + quote("budget café"))
+        self.assertEqual(status, 200)
+        result = json.loads(body)
+        self.assertEqual(result["query"], "budget café")
+        self.assertEqual(len(result["results"]), 12)
+        for passage in result["results"]:
+            self.assertEqual(passage["text"], "Budget is 42 dollars.")
+            self.assertIn(passage["page"], range(1, 15))
 
     def test_wrong_host_and_foreign_origins_are_rejected(self):
         for host in ["evil.example", "127.0.0.1:1", "localhost", f"evil.example:{self.port}"]:

@@ -1,8 +1,10 @@
 # PDF Desk
 
-A local reading desk for text PDFs. Import a document, read generated page summaries, ask a focused question, and open the original PDF at each supporting physical page. A browser UI and JSON-producing CLI share the same extraction, storage, retrieval, and model service.
+A local reading desk for text PDFs. Import a document, search its extracted passages, and open matching physical pages in the original PDF. The browser and JSON-producing CLI also offer experimental generated page summaries and question answers.
 
-PDF Desk uses an installed **local Ollama model**, defaulting to `qwen2.5:1.5b`. It makes no hosted or paid API calls, requires no API key, and never downloads a model automatically. Import, list, source-text inspection, and delete work without model access.
+![PDF Desk keyword search with an exact source passage and physical page link](evidence/preview.png)
+
+PDF Desk uses an installed **local Ollama model**, defaulting to `qwen2.5:1.5b`. It makes no hosted or paid API calls, requires no API key, and never downloads a model automatically. Import, list, keyword search, source-text inspection, and delete work without model access.
 
 ## Install and open the desk
 
@@ -20,7 +22,7 @@ pdfdesk --data-dir .pdfdesk import examples/workshop.pdf
 pdfdesk --data-dir .pdfdesk serve --port 8765
 ```
 
-Open **http://127.0.0.1:8765**. The library accepts a chosen or dropped PDF. Select a document, use **Page summaries** or **Ask the document**, and inspect **Source text** or **Open original**. Every evidence card has the exact extracted quote and an original-page link. The model badge checks availability; readiness is not an inference test.
+Open **http://127.0.0.1:8765**. The library accepts a chosen or dropped PDF. Select a document and use **Source text → Find words in this PDF** for keyword search and matching passages with direct page links. Search works with Ollama stopped. You can also try **Page summaries** or **Ask the document**, and inspect **Open original**. Every evidence card has the exact extracted quote and an original-page link. The model badge checks availability; readiness is not an inference test.
 
 The included `examples/workshop.pdf` and `examples/research-note.pdf` contain invented policies and fictional research data. They are test fixtures, not real organizational guidance or scientific evidence. The workshop guide deliberately includes an untrusted instruction to exercise prompt-injection behavior.
 
@@ -31,6 +33,7 @@ Run `pdfdesk --help` or `python -m pdfdesk --help`. Global options go before the
 ```sh
 pdfdesk --data-dir .pdfdesk list
 pdfdesk --data-dir .pdfdesk show DOCUMENT_ID
+pdfdesk --data-dir .pdfdesk search DOCUMENT_ID "design revisions"
 pdfdesk --data-dir .pdfdesk summarize DOCUMENT_ID
 pdfdesk --data-dir .pdfdesk ask DOCUMENT_ID \
   "How do I export a design, and are annual memberships refundable?"
@@ -42,6 +45,8 @@ pdfdesk --data-dir .pdfdesk --model qwen2.5:1.5b \
 ```
 
 The equivalent environment defaults are `PDFDESK_DATA_DIR`, `PDFDESK_MODEL`, and `PDFDESK_OLLAMA_URL`. Model URLs must be loopback HTTP addresses without credentials or extra paths. CLI commands print JSON on success; failures go to standard error with a nonzero exit status.
+
+`search` returns the trimmed `query` and up to 12 ranked `results`, each containing an exact indexed passage, its physical `page`, and an original-page `url`. No match returns an empty results list. This is keyword ranking: passages may match any query term, and paraphrases without shared words may be missed. Search results are source text, without an AI-generated answer.
 
 ## What the results mean
 
@@ -90,6 +95,7 @@ The browser uses these routes. Responses are JSON except static assets and the o
 | DELETE | `/api/documents/ID` | Delete the local original and its index |
 | GET | `/api/documents/ID/file` | Original PDF bytes |
 | GET | `/api/documents/ID/passages` | Indexed page-local passages |
+| GET | `/api/documents/ID/search?q=WORDS` | Up to 12 ranked source passages with exact physical-page links; no model needed |
 | POST | `/api/documents/ID/summary` | JSON `{}`; generated page summaries and cited key points |
 | POST | `/api/documents/ID/answer` | JSON `{"question":"…"}`; support decision, source-extract answer, evidence and retrieved passages |
 
@@ -100,6 +106,7 @@ The server requires `Content-Length` for POSTs, allows up to 32 KiB for JSON bod
 ```sh
 python -m unittest discover -s tests -v
 python -m compileall -q pdfdesk tests
+node tools/test_ui_state.cjs
 
 # Uses the installed model and real synthetic PDFs; can take several minutes.
 python tools/evaluate_live.py --base-url http://127.0.0.1:11434 \
@@ -108,12 +115,14 @@ python tools/evaluate_live.py --base-url http://127.0.0.1:11434 \
 
 Unit tests exercise real PDF extraction/storage, request protections and CLI behavior, with deterministic fake model responses for model-dependent assertions. GitHub Actions is configured for Ubuntu Python 3.11 and 3.14 and does not download or invoke a hosted model. Loopback integration tests need permission to open local sockets.
 
+CI also builds a wheel, installs it into a fresh virtual environment, and runs `python -I tools/smoke_installed.py` with that environment's Python. This checks the installed CLI, persisted pages, packaged web assets, original-file bytes, and deletion from outside the source import path. The JavaScript state regression needs Node.js 18 or newer.
+
 The live evaluator imports both public PDFs into a temporary persistent store, checks restart/deletion behavior, generates page summaries, and runs the manifest's supported, unsupported, multipart, qualifier, and hostile-annotation questions. It checkpoints genuine outputs, model traces, code/fixture fingerprints and citation checks to the chosen JSON file. Exit 0 means automated smoke checks passed **with manual review still required**; 1 means a failed/interrupted run; 2 means model access is blocked. Inspect the report's `status`, individual checks, outputs and review assessments. A partially completed report is useful evidence, not a successful evaluation.
 
-**Development status:** 64 deterministic tests and the browser mechanics smoke check pass locally on Python 3.14. The November 9 real-model run with `qwen2.5:1.5b` failed the synthetic regression set: both summaries were rejected, several supported questions falsely abstained, and hostile/irrelevant source text was sometimes accepted as evidence. The AI path remains experimental; inspect the original PDF rather than relying on its support decision. Evaluation of the already-installed `qwen2.5:3b` alternative and Ubuntu CI verification are in progress.
+**Development status:** 71 automated tests, 13 real-browser integration checks, and 6 fresh-wheel checks pass locally on Python 3.14. Keyword search and source inspection work without a model. All three November 9 real-model evaluations failed overall: the latest `qwen2.5:1.5b` run met the mechanical expectations for 12 of 16 question cases and returned neither complete summary. False support, missed facts, and hostile source instructions accepted as evidence remain observed failures. The AI path stays experimental. Read the [manual model review](evidence/model-review-2026-11-09.md), [browser evidence](evidence/browser-2026-11-09.json), and [installed-package evidence](evidence/installed-2026-11-09.json) for the exact scope and failures.
 
 Do not infer a model accuracy rate from these examples: they are a small synthetic regression set used during development, not an untouched holdout, and substring/citation checks do not prove factual entailment.
 
 ## Implementation
 
-`core.py` owns pypdf extraction, normalized pages, overlapping passages, per-operation SQLite connections and lexical retrieval. `model.py` calls local Ollama using structured JSON schemas, constrained sentence identifiers and exact-text restoration. `service.py` checks source provenance and orchestrates generation and grounding reviews. `server.py` exposes the loopback API and packaged vanilla HTML/CSS/JavaScript UI; `cli.py` uses the same services. [Ollama's structured-output documentation](https://docs.ollama.com/capabilities/structured-outputs) describes the schema mechanism; a valid schema alone does not guarantee a correct answer.
+`core.py` owns pypdf extraction, normalized pages, overlapping passages, per-operation SQLite connections and lexical retrieval. `search.py` exposes validated keyword queries and physical-page links without generation. `model.py` calls local Ollama using structured JSON schemas, constrained sentence identifiers and exact-text restoration. `service.py` checks source provenance and orchestrates generation and grounding reviews. `server.py` exposes the loopback API and packaged vanilla HTML/CSS/JavaScript UI; `cli.py` uses the same services. [Ollama's structured-output documentation](https://docs.ollama.com/capabilities/structured-outputs) describes the schema mechanism; a valid schema alone does not guarantee a correct answer.

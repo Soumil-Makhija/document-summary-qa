@@ -5,7 +5,8 @@ const state = {
   documents: [], current: null, selection: 0, uploading: false,
   summaries: new Map(), answers: new Map(),
   pendingSummaries: new Set(), pendingAnswers: new Map(),
-  summaryErrors: new Map(), answerErrors: new Map()
+  summaryErrors: new Map(), answerErrors: new Map(),
+  searches: new Map(), pendingSearches: new Map(), searchErrors: new Map()
 };
 
 function element(tag, className, text) {
@@ -109,6 +110,39 @@ function renderSource(doc) {
     details.append(summary, content); pages.append(details);
   }
 }
+function renderSearch() {
+  const id = state.current?.id;
+  const data = state.searches.get(id);
+  const pending = state.pendingSearches.has(id);
+  $('search-source').disabled = pending;
+  $('source-query').value = state.pendingSearches.get(id) ?? data?.query ?? '';
+  notice('search-error', state.searchErrors.get(id));
+  busyStatus('search-status', pending ? 'Searching the extracted pages…' : '');
+  const results = $('search-results'); results.replaceChildren();
+  if (!data) return;
+  results.append(element('p', 'result-meta', data.results.length
+    ? `${data.results.length} matching ${data.results.length === 1 ? 'passage' : 'passages'} for “${data.query}” · up to 12 results`
+    : `No matching passages for “${data.query}”. Try words that appear in the PDF.`));
+  for (const passage of data.results) {
+    const card = element('article', 'search-card');
+    card.append(sourceLink(id, passage.page), element('blockquote', '', passage.text));
+    results.append(card);
+  }
+}
+async function searchSource(event) {
+  event.preventDefault();
+  const doc = state.current; const query = $('source-query').value.trim();
+  if (!doc || !query || state.pendingSearches.has(doc.id)) return;
+  state.pendingSearches.set(doc.id, query); state.searchErrors.delete(doc.id); renderSearch();
+  try {
+    const result = await api(`/documents/${encodeURIComponent(doc.id)}/search?q=${encodeURIComponent(query)}`);
+    state.searches.set(doc.id, result);
+  } catch (error) { state.searchErrors.set(doc.id, error.message); }
+  finally {
+    state.pendingSearches.delete(doc.id);
+    if (state.current?.id === doc.id) renderSearch();
+  }
+}
 async function selectDocument(id) {
   const selection = ++state.selection;
   notice('global-error', '');
@@ -122,7 +156,7 @@ async function selectDocument(id) {
     notice('document-warnings', (doc.warnings || []).join(' '));
     renderRequestState(id);
     $('question').value = state.pendingAnswers.get(id) ?? state.answers.get(id)?.question ?? '';
-    renderSummary(state.summaries.get(id)); renderAnswer(state.answers.get(id)); renderSource(doc); renderLibrary();
+    renderSummary(state.summaries.get(id)); renderAnswer(state.answers.get(id)); renderSource(doc); renderSearch(); renderLibrary();
     visible('welcome', false); visible('document-workspace', true); showTab('summary');
     document.title = `${doc.name} · PDF Desk`;
   } catch (error) { if (selection === state.selection) notice('global-error', error.message); }
@@ -172,7 +206,7 @@ async function askQuestion(event) {
 async function deleteDocument() {
   const doc = state.current; if (!doc || !window.confirm(`Delete “${doc.name}” and its local original from PDF Desk?`)) return;
   $('delete-document').disabled = true;
-  try { await api(`/documents/${encodeURIComponent(doc.id)}`, { method: 'DELETE' }); state.summaries.delete(doc.id); state.answers.delete(doc.id); state.summaryErrors.delete(doc.id); state.answerErrors.delete(doc.id); state.current = null; await refreshDocuments(); }
+  try { await api(`/documents/${encodeURIComponent(doc.id)}`, { method: 'DELETE' }); state.summaries.delete(doc.id); state.answers.delete(doc.id); state.summaryErrors.delete(doc.id); state.answerErrors.delete(doc.id); state.searches.delete(doc.id); state.searchErrors.delete(doc.id); state.current = null; await refreshDocuments(); }
   catch (error) { notice('global-error', error.message); }
   finally { $('delete-document').disabled = false; }
 }
@@ -191,6 +225,7 @@ $('file-input').addEventListener('change', event => upload(event.target.files[0]
 $('welcome-upload').addEventListener('click', () => $('file-input').click());
 $('generate-summary').addEventListener('click', generateSummary);
 $('question-form').addEventListener('submit', askQuestion);
+$('source-search-form').addEventListener('submit', searchSource);
 $('delete-document').addEventListener('click', deleteDocument);
 document.querySelectorAll('[data-tab]').forEach(tab => {
   tab.addEventListener('click', () => showTab(tab.dataset.tab));

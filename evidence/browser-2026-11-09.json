@@ -1,0 +1,153 @@
+{
+  "schema_version": 1,
+  "started_at": "2026-11-09T21:35:28.897Z",
+  "client_date": "2026-11-09",
+  "timezone": "America/Edmonton",
+  "kind": "real browser and HTTP integration, no model inference",
+  "source_commit": "d3be8dec4f3729e798a2481c5f33e2ece76b96f1",
+  "browser": "Google Chrome via Playwright",
+  "checks": [
+    {
+      "name": "empty library opens",
+      "passed": true,
+      "count": 0
+    },
+    {
+      "name": "upload research note through browser",
+      "passed": true,
+      "document_name": "research-note.pdf",
+      "page_count": 3
+    },
+    {
+      "name": "source pages and original PDF bytes",
+      "passed": true,
+      "physical_pages": 3,
+      "exact_original_bytes": true
+    },
+    {
+      "name": "second upload and document selection",
+      "passed": true,
+      "count": 2,
+      "selection_restored": true,
+      "workshop_pages": 5
+    },
+    {
+      "name": "model-free source search finds exact retention passage",
+      "passed": true,
+      "query": "design revisions",
+      "results": 1,
+      "exact_passage": true,
+      "retention_physical_page": 2
+    },
+    {
+      "name": "irrelevant search displays explicit empty results",
+      "passed": true,
+      "results": 0
+    },
+    {
+      "name": "Unicode and markup query are safely encoded and rendered",
+      "passed": true,
+      "query_round_trip": true,
+      "markup_injected": false
+    },
+    {
+      "name": "document switching restores cached search query and results",
+      "passed": true,
+      "query_restored": true,
+      "results_restored": 1,
+      "other_document_isolated": true
+    },
+    {
+      "name": "desktop has no horizontal overflow",
+      "passed": true,
+      "viewport": 1440,
+      "document": 1440,
+      "body": 1440
+    },
+    {
+      "name": "390px mobile selection and layout",
+      "passed": true,
+      "viewport": 390,
+      "document": 390,
+      "body": 390
+    },
+    {
+      "name": "delete workshop removes its original and index",
+      "passed": true,
+      "remaining_documents": 1,
+      "deleted_original_absent": true
+    },
+    {
+      "name": "delete last PDF restores empty library",
+      "passed": true,
+      "remaining_documents": 0,
+      "original_files": 0
+    },
+    {
+      "name": "browser errors and inference calls",
+      "passed": true,
+      "page_errors": 0,
+      "failed_requests": 0,
+      "inference_requests": 0
+    }
+  ],
+  "page_errors": [],
+  "failed_requests": [],
+  "inference_requests": [],
+  "screenshots": [
+    "tmp/browser-2026-11-09/desktop-research-source.png",
+    "tmp/browser-2026-11-09/desktop-workshop-search.png",
+    "tmp/browser-2026-11-09/desktop-workshop.png",
+    "tmp/browser-2026-11-09/mobile-workshop-source.png",
+    "tmp/browser-2026-11-09/desktop-source-search.png"
+  ],
+  "fixture_sha256": {
+    "research-note.pdf": "8ed3fa910f88e828dc7bfeee493fe74af7e91cfb2d5c35919e88a4818552ba07",
+    "workshop.pdf": "b983b5cee57d0d6d3dc8f2659c3d078b5e496e706622b38076661130df4636d1"
+  },
+  "status": "passed",
+  "harness_notes": [
+    "An initial run passed six checks before its delete wait incorrectly required a mobile-hidden library count to be visible. The locator now waits for matching DOM text; deletion itself had updated the count correctly."
+  ],
+  "source_file_sha256": {
+    "pdfdesk/server.py": "85b93a57c7c691bc9166ba8d59db31152e6ae3c2253a7af14826b607e1c75d70",
+    "pdfdesk/search.py": "57a086085337c79a8dafe118552a4655cfd0f55399042e64092d024d76fc0c54",
+    "pdfdesk/web/app.js": "bfbc2e83fba42186b8d5d3b40af9e450681ace306fe0603f8e72271be29caefb",
+    "pdfdesk/web/index.html": "c49f4cafd286c801f5798461c4c0d83783f2b8678ea680d4d0a71672a4d54d83",
+    "pdfdesk/web/style.css": "804ce7b77d01c57976e632bdf331c9f2b07445acb6ede6768797e0a22b57efb9"
+  },
+  "working_tree_changes": [
+    "M .github/workflows/checks.yml",
+    " M README.md",
+    " M pdfdesk/cli.py",
+    " M pdfdesk/model.py",
+    " M pdfdesk/server.py",
+    " M pdfdesk/service.py",
+    " M pdfdesk/web/app.js",
+    " M pdfdesk/web/index.html",
+    " M pdfdesk/web/style.css",
+    " M tests/test_cli.py",
+    " M tests/test_http.py",
+    " M tests/test_model.py",
+    " M tests/test_service.py",
+    "?? evidence/browser-2026-11-09.json",
+    "?? evidence/installed-2026-11-09.json",
+    "?? evidence/live-2026-11-09-3b.json",
+    "?? evidence/live-2026-11-09-reviewed.json",
+    "?? evidence/live-initial.json",
+    "?? evidence/live-sandbox-blocked.json",
+    "?? pdfdesk/search.py",
+    "?? tools/smoke_installed.py",
+    "?? tools/test_ui_state.cjs"
+  ],
+  "base_url": "http://127.0.0.1:50979",
+  "finished_at": "2026-11-09T21:35:31.768Z",
+  "checks_passed": 13,
+  "checks_failed": 0,
+  "server_stopped": true,
+  "temporary_store_removed": true,
+  "visual_review": {
+    "desktop_source_search": "Inspected screenshot: exact synthetic retention passage and physical page 2 link readable; no overlap or clipping.",
+    "mobile_source_layout": "Inspected full-page screenshot: 390px content wraps within viewport; no horizontal clipping. A full-page capture can expose the offscreen fixed skip link at the capture scroll position."
+  }
+}

@@ -204,22 +204,27 @@ class ModelTests(unittest.TestCase):
     def test_review_remaps_boolean_without_changing_service_schema(self):
         schema = _object({"assessment": _text(1500), "supported": {"type": "boolean"}})
         before = json.dumps(schema, sort_keys=True)
-        for approved in [True, False]:
-            with self.subTest(approved=approved):
-                output = {"assessment": "The evidence was checked.", "question_complete": approved}
-                model, _ = self.model_with_response({"done": True, "message": {"content": json.dumps(output)}})
-                self.assertEqual(model.chat("review_answer", schema, "Set supported after review.", {"evidence": []}),
-                                 {"assessment": output["assessment"], "supported": approved})
-                body = json.loads(model.opener.open.call_args.args[0].data)
-                self.assertEqual(set(body["format"]["properties"]), {"assessment", "question_complete"})
-                self.assertEqual(body["format"]["required"], ["assessment", "question_complete"])
-                self.assertIn("Set question_complete after review.", body["messages"][0]["content"])
-                self.assertEqual(json.dumps(schema, sort_keys=True), before)
+        for task, field in [("review_answer", "evidence_answers_question"),
+                            ("review_plan", "plan_preserves_question"),
+                            ("review_point", "claims_are_grounded"),
+                            ("review_summary", "claims_are_grounded")]:
+            for approved in [True, False]:
+                with self.subTest(task=task, approved=approved):
+                    output = {"assessment": "The evidence was checked.", field: approved}
+                    model, _ = self.model_with_response({"done": True, "message": {"content": json.dumps(output)}})
+                    self.assertEqual(model.chat(task, schema, "Set supported after review.", {"evidence": []}),
+                                     {"assessment": output["assessment"], "supported": approved})
+                    body = json.loads(model.opener.open.call_args.args[0].data)
+                    self.assertEqual(set(body["format"]["properties"]), {"assessment", field})
+                    self.assertEqual(body["format"]["required"], ["assessment", field])
+                    self.assertTrue(body["format"]["properties"][field]["description"].startswith("True only when"))
+                    self.assertIn(f"Set {field} after review.", body["messages"][0]["content"])
+                    self.assertEqual(json.dumps(schema, sort_keys=True), before)
 
     def test_review_rejects_missing_or_extra_fields(self):
         schema = _object({"assessment": _text(1500), "supported": {"type": "boolean"}})
         for output in [{}, {"assessment": "Checked.", "supported": True},
-                       {"assessment": "Checked.", "question_complete": True, "extra": 1}]:
+                       {"assessment": "Checked.", "evidence_answers_question": True, "extra": 1}]:
             with self.subTest(output=output):
                 model, _ = self.model_with_response({"done": True, "message": {"content": json.dumps(output)}})
                 with self.assertRaisesRegex(ModelError, "invalid grounding review"):
