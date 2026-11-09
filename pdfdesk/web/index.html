@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f7f2">
+  <title>PDF Desk · Read with evidence</title>
+  <link rel="stylesheet" href="/style.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#workspace">Skip to reading desk</a>
+  <div class="desk-shell">
+    <aside class="library" aria-label="Document library">
+      <a class="brand" href="/" aria-label="PDF Desk home"><span class="brand-mark" aria-hidden="true">pd.</span><span>PDF Desk<small>YOUR LOCAL READING ROOM</small></span></a>
+      <div class="library-heading"><h2>Library</h2><span id="document-count" class="count">0</span></div>
+      <label class="upload-zone" id="upload-zone" for="file-input" tabindex="0" role="button" aria-controls="file-input">
+        <span class="upload-icon" aria-hidden="true">↥</span>
+        <strong>Add a PDF</strong><span>Choose a file or drop it here</span>
+        <small>Text PDFs · up to 10 MB · 80 pages</small>
+      </label>
+      <input id="file-input" class="visually-hidden" type="file" accept="application/pdf,.pdf" tabindex="-1">
+      <p id="upload-status" class="status" role="status" aria-live="polite"></p>
+      <nav id="document-list" class="document-list" aria-label="Your PDFs"></nav>
+      <div class="library-foot"><span class="privacy-dot" aria-hidden="true"></span><span>Stored on this computer<br><small>Originals stay close to their sources.</small></span></div>
+    </aside>
+
+    <main id="workspace" class="workspace" tabindex="-1">
+      <header class="topbar"><span class="eyebrow">A LITTLE CLARITY, PAGE BY PAGE</span><span id="model-status" class="model-status">Checking model…</span></header>
+      <div id="global-error" class="notice error hidden" role="alert"></div>
+      <section id="welcome" class="welcome">
+        <div class="paper-stack" aria-hidden="true"><div><span>THE READING ROOM</span><i></i><i></i><i></i><b>“</b><i></i><i></i></div></div>
+        <p class="eyebrow">MAKE ROOM FOR UNDERSTANDING</p>
+        <h1>Your documents.<br>A clearer perspective.</h1>
+        <p>Bring a PDF to the desk. Explore page summaries, ask focused questions, and follow every answer back to its source.</p>
+        <button type="button" class="button primary" id="welcome-upload">Open your first PDF <span aria-hidden="true">↗</span></button>
+        <div class="welcome-notes"><span>01 <b>Read the overview</b></span><span>02 <b>Ask a question</b></span><span>03 <b>Check the evidence</b></span></div>
+      </section>
+
+      <section id="document-workspace" class="hidden" aria-labelledby="document-title">
+        <div class="document-heading"><div><p class="eyebrow">ON YOUR DESK</p><h1 id="document-title"></h1><p id="document-meta" class="document-meta"></p></div><div class="document-actions"><a id="original-link" class="button secondary" target="_blank" rel="noopener">Open original <span aria-hidden="true">↗</span></a><button id="delete-document" class="icon-button" type="button" aria-label="Delete this document" title="Delete document">⌫</button></div></div>
+        <div id="document-warnings" class="notice warning hidden" role="status"></div>
+        <div class="tabs" role="tablist" aria-label="Reading tools">
+          <button id="tab-summary" class="tab active" role="tab" aria-selected="true" aria-controls="panel-summary" tabindex="0" data-tab="summary">Page summaries</button>
+          <button id="tab-questions" class="tab" role="tab" aria-selected="false" aria-controls="panel-questions" tabindex="-1" data-tab="questions">Ask the document</button>
+          <button id="tab-source" class="tab" role="tab" aria-selected="false" aria-controls="panel-source" tabindex="-1" data-tab="source">Source text</button>
+        </div>
+
+        <section id="panel-summary" class="tool-panel" role="tabpanel" aria-labelledby="tab-summary">
+          <div class="section-intro"><div><p class="eyebrow">THE BIG PICTURE</p><h2>A guided read, with receipts.</h2><p>Generated interpretations of each page, paired with exact supporting passages.</p></div><button id="generate-summary" class="button primary" type="button">Summarize pages <span aria-hidden="true">✦</span></button></div>
+          <p id="summary-status" class="status" role="status" aria-live="polite"></p>
+          <div id="summary-error" class="notice error hidden" role="alert"></div>
+          <div id="summary-results"></div>
+          <div id="summary-empty" class="empty-card"><span class="empty-number" aria-hidden="true">01</span><h3>The overview starts here.</h3><p>Generate a page-by-page summary, then inspect the original passages behind its key points.</p><span class="subtle">Generated text can be imperfect. The original PDF is the reference.</span></div>
+        </section>
+
+        <section id="panel-questions" class="tool-panel hidden" role="tabpanel" aria-labelledby="tab-questions">
+          <div class="section-intro"><div><p class="eyebrow">FOLLOW YOUR CURIOSITY</p><h2>A question. A source to check.</h2><p>Ask about this document. Answers include exact excerpts and original page links.</p></div></div>
+          <form id="question-form" class="question-form"><label for="question">What would you like to know?</label><textarea id="question" name="question" rows="3" maxlength="2000" placeholder="e.g. What are the main findings and their limitations?" required></textarea><div class="question-footer"><span>Focused questions work best.</span><button id="ask-question" class="button primary" type="submit">Find an answer <span aria-hidden="true">↗</span></button></div></form>
+          <p id="answer-status" class="status" role="status" aria-live="polite"></p>
+          <div id="answer-error" class="notice error hidden" role="alert"></div>
+          <div id="answer-results" aria-live="polite"></div>
+        </section>
+
+        <section id="panel-source" class="tool-panel hidden" role="tabpanel" aria-labelledby="tab-source">
+          <div class="section-intro"><div><p class="eyebrow">BACK TO THE PAGE</p><h2>The extracted source.</h2><p>Page numbers match the original PDF. Layout and reading order may differ.</p></div></div>
+          <div id="source-pages"></div>
+        </section>
+        <footer class="reading-footer">Good understanding starts with a second look. <span>Always check the original.</span></footer>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

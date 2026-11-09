@@ -13,6 +13,9 @@ license = "MIT"
 [project.optional-dependencies]
 dev = ["reportlab>=4,<5"]
 
+[project.scripts]
+pdfdesk = "pdfdesk.cli:main"
+
 [tool.setuptools.packages.find]
 include = ["pdfdesk*"]
 
