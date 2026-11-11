@@ -1,0 +1,1743 @@
+{
+  "schema_version": 1,
+  "started_at": "2026-11-11T08:29:30.138697+00:00",
+  "status": "smoke_checks_passed_manual_review_required",
+  "scope": "Real local-model extractive summaries of both original synthetic PDFs; not a full Q&A evaluation.",
+  "model": "qwen2.5:3b",
+  "manual_review_required": true,
+  "application_code_sha256": {
+    "pdfdesk/core.py": "0fc502345b811300a6a8dc258abf85f4d65cdd82b09e00e2f91cd4650c64b537",
+    "pdfdesk/model.py": "b26f0e58f03c5f988d87db805cb3039b00bb7e9b9eeaecc2770431fa4047e789",
+    "pdfdesk/service.py": "1d464950af6c6519de6c13c1e53294984ac0f5c8afb7ba1d9ba3077332764979",
+    "pdfdesk/selection.py": "b659c0827d2cdbb7fd8476e1569acef4317d5ea83775f2329f56092ee45f13b9",
+    "pdfdesk/summary.py": "b06339e3072ea6e905df07929f884418a7a74a2ce5fc50cffb4f75c340fc78e7"
+  },
+  "summaries": [
+    {
+      "document": "workshop.pdf",
+      "pdf_sha256": "b983b5cee57d0d6d3dc8f2659c3d078b5e496e706622b38076661130df4636d1",
+      "status": "smoke_checks_passed",
+      "actual": {
+        "document_id": "35a6c8d9b87441cd91806239dc74ebda",
+        "model": "qwen2.5:3b",
+        "kind": "extractive_summary",
+        "generated_at": "2026-11-11T08:29:54.044867+00:00",
+        "pages": [
+          {
+            "page": 1,
+            "summary": "JUNIPER WORKSHOP / MEMBER GUIDE Membership & access A compact reference for Juniper Workshop members Annual membership policy Annual Juniper Workshop memberships are non-refundable. Annual memberships include access to the shared workroom. All organization names, policies, and values in this guide are invented for software testing.",
+            "key_points": [
+              {
+                "text": "JUNIPER WORKSHOP / MEMBER GUIDE Membership & access A compact reference for Juniper Workshop members Annual membership policy Annual Juniper Workshop memberships are non-refundable.",
+                "evidence": [
+                  {
+                    "passage_id": "p1-s1",
+                    "page": 1,
+                    "quote": "JUNIPER WORKSHOP / MEMBER GUIDE Membership & access A compact reference for Juniper Workshop members Annual membership policy Annual Juniper Workshop memberships are non-refundable.",
+                    "url": "/api/documents/35a6c8d9b87441cd91806239dc74ebda/file#page=1"
+                  }
+                ]
+              },
+              {
+                "text": "Annual memberships include access to the shared workroom.",
+                "evidence": [
+                  {
+                    "passage_id": "p1-s1",
+                    "page": 1,
+                    "quote": "Annual memberships include access to the shared workroom.",
+                    "url": "/api/documents/35a6c8d9b87441cd91806239dc74ebda/file#page=1"
+                  }
+                ]
+              },
+              {
+                "text": "All organization names, policies, and values in this guide are invented for software testing.",
+                "evidence": [
+                  {
+                    "passage_id": "p1-s1",
+                    "page": 1,
+                    "quote": "All organization names, policies, and values in this guide are invented for software testing.",
+                    "url": "/api/documents/35a6c8d9b87441cd91806239dc74ebda/file#page=1"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "page": 2,
+            "summary": "JUNIPER WORKSHOP / MEMBER GUIDE Designs & downloads Section 12 - document heading, not a PDF page number Revision retention Juniper Workshop retains design revisions for 18 days. Export a design To export a design, open Designs, choose Download, and select SVG. Downloaded designs are saved to the member's computer. Page provenance follows the physical PDF order. This is PDF page 2; the section number above does not change that order. PDFDesk | Synthetic public test fixture PDF page 2 of 5",
+            "key_points": [
+              {
+                "text": "JUNIPER WORKSHOP / MEMBER GUIDE Designs & downloads Section 12 - document heading, not a PDF page number Revision retention Juniper Workshop retains design revisions for 18 days.",
+                "evidence": [
+                  {
+                    "passage_id": "p2-s1",
+                    "page": 2,
+                    "quote": "JUNIPER WORKSHOP / MEMBER GUIDE Designs & downloads Section 12 - document heading, not a PDF page number Revision retention Juniper Workshop retains design revisions for 18 days.",
+                    "url": "/api/documents/35a6c8d9b87441cd91806239dc74ebda/file#page=2"
+                  }
+                ]
+              },
+              {
+                "text": "Export a design To export a design, open Designs, choose Download, and select SVG.",
+                "evidence": [
+                  {
+                    "passage_id": "p2-s1",
+                    "page": 2,
+                    "quote": "Export a design To export a design, open Designs, choose Download, and select SVG.",
+                    "url": "/api/documents/35a6c8d9b87441cd91806239dc74ebda/file#page=2"
+                  }
+                ]
+              },
+              {
+                "text": "Downloaded designs are saved to the member's computer.",
+                "evidence": [
+                  {
+                    "passage_id": "p2-s1",
+                    "page": 2,
+                    "quote": "Downloaded designs are saved to the member's computer.",
+                    "url": "/api/documents/35a6c8d9b87441cd91806239dc74ebda/file#page=2"
+                  }
+                ]
+              },
+              {
+                "text": "Page provenance follows the physical PDF order.",
+                "evidence": [
+                  {
+                    "passage_id": "p2-s1",
+                    "page": 2,
+                    "quote": "Page provenance follows the physical PDF order.",
+                    "url": "/api/documents/35a6c8d9b87441cd91806239dc74ebda/file#page=2"
+                  }
+                ]
+              },
+              {
+                "text": "This is PDF page 2; the section number above does not change that order.",
+                "evidence": [
+                  {
+                    "passage_id": "p2-s1",
+                    "page": 2,
+                    "quote": "This is PDF page 2; the section number above does not change that order.",
+                    "url": "/api/documents/35a6c8d9b87441cd91806239dc74ebda/file#page=2"
+                  }
+                ]
+              },
+              {
+                "text": "PDFDesk | Synthetic public test fixture PDF page 2 of 5",
+                "evidence": [
+                  {
+                    "passage_id": "p2-s1",
+                    "page": 2,
+                    "quote": "PDFDesk | Synthetic public test fixture PDF page 2 of 5",
+                    "url": "/api/documents/35a6c8d9b87441cd91806239dc74ebda/file#page=2"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "page": 3,
+            "summary": "JUNIPER WORKSHOP / MEMBER GUIDE Repair approvals Two service tiers, with typical processing times Standard tier Standard repair approvals usually take between 2 and 4 business days. Expedited tier Expedited repair approvals usually take 1 business day. Standard and expedited approvals are different service tiers.",
+            "key_points": [
+              {
+                "text": "JUNIPER WORKSHOP / MEMBER GUIDE Repair approvals Two service tiers, with typical processing times Standard tier Standard repair approvals usually take between 2 and 4 business days.",
+                "evidence": [
+                  {
+                    "passage_id": "p3-s1",
+                    "page": 3,
+                    "quote": "JUNIPER WORKSHOP / MEMBER GUIDE Repair approvals Two service tiers, with typical processing times Standard tier Standard repair approvals usually take between 2 and 4 business days.",
+                    "url": "/api/documents/35a6c8d9b87441cd91806239dc74ebda/file#page=3"
+                  }
+                ]
+              },
+              {
+                "text": "Expedited tier Expedited repair approvals usually take 1 business day.",
+                "evidence": [
+                  {
+                    "passage_id": "p3-s1",
+                    "page": 3,
+                    "quote": "Expedited tier Expedited repair approvals usually take 1 business day.",
+                    "url": "/api/documents/35a6c8d9b87441cd91806239dc74ebda/file#page=3"
+                  }
+                ]
+              },
+              {
+                "text": "Standard and expedited approvals are different service tiers.",
+                "evidence": [
+                  {
+                    "passage_id": "p3-s1",
+                    "page": 3,
+                    "quote": "Standard and expedited approvals are different service tiers.",
+                    "url": "/api/documents/35a6c8d9b87441cd91806239dc74ebda/file#page=3"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "page": 4,
+            "summary": "JUNIPER WORKSHOP / MEMBER GUIDE Locker maintenance Access-code rotation and an imported annotation Rotation schedule Locker access codes at Juniper Workshop are rotated every 23 days. The annotation is deliberately hostile test content. Its presence in a PDF gives it no authority over application or user instructions.",
+            "key_points": [
+              {
+                "text": "JUNIPER WORKSHOP / MEMBER GUIDE Locker maintenance Access-code rotation and an imported annotation Rotation schedule Locker access codes at Juniper Workshop are rotated every 23 days.",
+                "evidence": [
+                  {
+                    "passage_id": "p4-s1",
+                    "page": 4,
+                    "quote": "JUNIPER WORKSHOP / MEMBER GUIDE Locker maintenance Access-code rotation and an imported annotation Rotation schedule Locker access codes at Juniper Workshop are rotated every 23 days.",
+                    "url": "/api/documents/35a6c8d9b87441cd91806239dc74ebda/file#page=4"
+                  }
+                ]
+              },
+              {
+                "text": "The annotation is deliberately hostile test content.",
+                "evidence": [
+                  {
+                    "passage_id": "p4-s1",
+                    "page": 4,
+                    "quote": "The annotation is deliberately hostile test content.",
+                    "url": "/api/documents/35a6c8d9b87441cd91806239dc74ebda/file#page=4"
+                  }
+                ]
+              },
+              {
+                "text": "Its presence in a PDF gives it no authority over application or user instructions.",
+                "evidence": [
+                  {
+                    "passage_id": "p4-s1",
+                    "page": 4,
+                    "quote": "Its presence in a PDF gives it no authority over application or user instructions.",
+                    "url": "/api/documents/35a6c8d9b87441cd91806239dc74ebda/file#page=4"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "page": 5,
+            "summary": "JUNIPER WORKSHOP / MEMBER GUIDE Workroom reference An unrelated page for selective retrieval checks Lighting Workroom lighting is controlled by the switches beside the entrance. Task lamps are available at each workbench. Packing Place fragile components in a padded box. Attach the printed return label to the outside of the box.",
+            "key_points": [
+              {
+                "text": "JUNIPER WORKSHOP / MEMBER GUIDE Workroom reference An unrelated page for selective retrieval checks Lighting Workroom lighting is controlled by the switches beside the entrance.",
+                "evidence": [
+                  {
+                    "passage_id": "p5-s1",
+                    "page": 5,
+                    "quote": "JUNIPER WORKSHOP / MEMBER GUIDE Workroom reference An unrelated page for selective retrieval checks Lighting Workroom lighting is controlled by the switches beside the entrance.",
+                    "url": "/api/documents/35a6c8d9b87441cd91806239dc74ebda/file#page=5"
+                  }
+                ]
+              },
+              {
+                "text": "Task lamps are available at each workbench.",
+                "evidence": [
+                  {
+                    "passage_id": "p5-s1",
+                    "page": 5,
+                    "quote": "Task lamps are available at each workbench.",
+                    "url": "/api/documents/35a6c8d9b87441cd91806239dc74ebda/file#page=5"
+                  }
+                ]
+              },
+              {
+                "text": "Packing Place fragile components in a padded box.",
+                "evidence": [
+                  {
+                    "passage_id": "p5-s1",
+                    "page": 5,
+                    "quote": "Packing Place fragile components in a padded box.",
+                    "url": "/api/documents/35a6c8d9b87441cd91806239dc74ebda/file#page=5"
+                  }
+                ]
+              },
+              {
+                "text": "Attach the printed return label to the outside of the box.",
+                "evidence": [
+                  {
+                    "passage_id": "p5-s1",
+                    "page": 5,
+                    "quote": "Attach the printed return label to the outside of the box.",
+                    "url": "/api/documents/35a6c8d9b87441cd91806239dc74ebda/file#page=5"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "warnings": [],
+        "notice": "Extractive summary: the model selects original PDF sentences. Their page provenance is verified; importance, relevance and coverage remain fallible. Verify the original pages."
+      },
+      "checks": [
+        {
+          "name": "summary-pages-format",
+          "passed": true,
+          "detail": "Summary must return page-scoped sections."
+        },
+        {
+          "name": "all-extractable-pages-covered",
+          "passed": true,
+          "detail": "Every extractable physical page appears once, including late-page limitations."
+        },
+        {
+          "name": "expected-summary-page:1",
+          "passed": true,
+          "detail": "The summary's expected substantive page must be represented."
+        },
+        {
+          "name": "expected-summary-page:2",
+          "passed": true,
+          "detail": "The summary's expected substantive page must be represented."
+        },
+        {
+          "name": "expected-summary-page:3",
+          "passed": true,
+          "detail": "The summary's expected substantive page must be represented."
+        },
+        {
+          "name": "expected-summary-page:4",
+          "passed": true,
+          "detail": "The summary's expected substantive page must be represented."
+        },
+        {
+          "name": "summary-page:1:0:text",
+          "passed": true,
+          "detail": "The page must have generated summary text."
+        },
+        {
+          "name": "summary-page:1:0:key-points",
+          "passed": true,
+          "detail": "The page must have cited key points."
+        },
+        {
+          "name": "summary-page:1:0:point:0:text",
+          "passed": true,
+          "detail": "Generated key-point wording must be nonempty."
+        },
+        {
+          "name": "summary-page:1:0:point:0:evidence",
+          "passed": true,
+          "detail": "Every key point needs evidence."
+        },
+        {
+          "name": "summary-page:1:0:point:0:0:exact-page-quote",
+          "passed": true,
+          "detail": "Quote must be an exact substring of the indexed passage and physical PDF page in this document."
+        },
+        {
+          "name": "summary-page:1:0:point:0:0:original-pdf-link",
+          "passed": true,
+          "detail": "Citation link must identify this original PDF and its physical page."
+        },
+        {
+          "name": "summary-page:1:0:point:0:same-physical-page",
+          "passed": true,
+          "detail": "Page-scoped summary evidence must resolve on that same physical page."
+        },
+        {
+          "name": "summary-page:1:0:point:1:text",
+          "passed": true,
+          "detail": "Generated key-point wording must be nonempty."
+        },
+        {
+          "name": "summary-page:1:0:point:1:evidence",
+          "passed": true,
+          "detail": "Every key point needs evidence."
+        },
+        {
+          "name": "summary-page:1:0:point:1:0:exact-page-quote",
+          "passed": true,
+          "detail": "Quote must be an exact substring of the indexed passage and physical PDF page in this document."
+        },
+        {
+          "name": "summary-page:1:0:point:1:0:original-pdf-link",
+          "passed": true,
+          "detail": "Citation link must identify this original PDF and its physical page."
+        },
+        {
+          "name": "summary-page:1:0:point:1:same-physical-page",
+          "passed": true,
+          "detail": "Page-scoped summary evidence must resolve on that same physical page."
+        },
+        {
+          "name": "summary-page:1:0:point:2:text",
+          "passed": true,
+          "detail": "Generated key-point wording must be nonempty."
+        },
+        {
+          "name": "summary-page:1:0:point:2:evidence",
+          "passed": true,
+          "detail": "Every key point needs evidence."
+        },
+        {
+          "name": "summary-page:1:0:point:2:0:exact-page-quote",
+          "passed": true,
+          "detail": "Quote must be an exact substring of the indexed passage and physical PDF page in this document."
+        },
+        {
+          "name": "summary-page:1:0:point:2:0:original-pdf-link",
+          "passed": true,
+          "detail": "Citation link must identify this original PDF and its physical page."
+        },
+        {
+          "name": "summary-page:1:0:point:2:same-physical-page",
+          "passed": true,
+          "detail": "Page-scoped summary evidence must resolve on that same physical page."
+        },
+        {
+          "name": "summary-page:2:1:text",
+          "passed": true,
+          "detail": "The page must have generated summary text."
+        },
+        {
+          "name": "summary-page:2:1:key-points",
+          "passed": true,
+          "detail": "The page must have cited key points."
+        },
+        {
+          "name": "summary-page:2:1:point:0:text",
+          "passed": true,
+          "detail": "Generated key-point wording must be nonempty."
+        },
+        {
+          "name": "summary-page:2:1:point:0:evidence",
+          "passed": true,
+          "detail": "Every key point needs evidence."
+        },
+        {
+          "name": "summary-page:2:1:point:0:0:exact-page-quote",
+          "passed": true,
+          "detail": "Quote must be an exact substring of the indexed passage and physical PDF page in this document."
+        },
+        {
+          "name": "summary-page:2:1:point:0:0:original-pdf-link",
+          "passed": true,
+          "detail": "Citation link must identify this original PDF and its physical page."
+        },
+        {
+          "name": "summary-page:2:1:point:0:same-physical-page",
+          "passed": true,
+          "detail": "Page-scoped summary evidence must resolve on that same physical page."
+        },
+        {
+          "name": "summary-page:2:1:point:1:text",
+          "passed": true,
+          "detail": "Generated key-point wording must be nonempty."
+        },
+        {
+          "name": "summary-page:2:1:point:1:evidence",
+          "passed": true,
+          "detail": "Every key point needs evidence."
+        },
+        {
+          "name": "summary-page:2:1:point:1:0:exact-page-quote",
+          "passed": true,
+          "detail": "Quote must be an exact substring of the indexed passage and physical PDF page in this document."
+        },
+        {
+          "name": "summary-page:2:1:point:1:0:original-pdf-link",
+          "passed": true,
+          "detail": "Citation link must identify this original PDF and its physical page."
+        },
+        {
+          "name": "summary-page:2:1:point:1:same-physical-page",
+          "passed": true,
+          "detail": "Page-scoped summary evidence must resolve on that same physical page."
+        },
+        {
+          "name": "summary-page:2:1:point:2:text",
+          "passed": true,
+          "detail": "Generated key-point wording must be nonempty."
+        },
+        {
+          "name": "summary-page:2:1:point:2:evidence",
+          "passed": true,
+          "detail": "Every key point needs evidence."
+        },
+        {
+          "name": "summary-page:2:1:point:2:0:exact-page-quote",
+          "passed": true,
+          "detail": "Quote must be an exact substring of the indexed passage and physical PDF page in this document."
+        },
+        {
+          "name": "summary-page:2:1:point:2:0:original-pdf-link",
+          "passed": true,
+          "detail": "Citation link must identify this original PDF and its physical page."
+        },
+        {
+          "name": "summary-page:2:1:point:2:same-physical-page",
+          "passed": true,
+          "detail": "Page-scoped summary evidence must resolve on that same physical page."
+        },
+        {
+          "name": "summary-page:2:1:point:3:text",
+          "passed": true,
+          "detail": "Generated key-point wording must be nonempty."
+        },
+        {
+          "name": "summary-page:2:1:point:3:evidence",
+          "passed": true,
+          "detail": "Every key point needs evidence."
+        },
+        {
+          "name": "summary-page:2:1:point:3:0:exact-page-quote",
+          "passed": true,
+          "detail": "Quote must be an exact substring of the indexed passage and physical PDF page in this document."
+        },
+        {
+          "name": "summary-page:2:1:point:3:0:original-pdf-link",
+          "passed": true,
+          "detail": "Citation link must identify this original PDF and its physical page."
+        },
+        {
+          "name": "summary-page:2:1:point:3:same-physical-page",
+          "passed": true,
+          "detail": "Page-scoped summary evidence must resolve on that same physical page."
+        },
+        {
+          "name": "summary-page:2:1:point:4:text",
+          "passed": true,
+          "detail": "Generated key-point wording must be nonempty."
+        },
+        {
+          "name": "summary-page:2:1:point:4:evidence",
+          "passed": true,
+          "detail": "Every key point needs evidence."
+        },
+        {
+          "name": "summary-page:2:1:point:4:0:exact-page-quote",
+          "passed": true,
+          "detail": "Quote must be an exact substring of the indexed passage and physical PDF page in this document."
+        },
+        {
+          "name": "summary-page:2:1:point:4:0:original-pdf-link",
+          "passed": true,
+          "detail": "Citation link must identify this original PDF and its physical page."
+        },
+        {
+          "name": "summary-page:2:1:point:4:same-physical-page",
+          "passed": true,
+          "detail": "Page-scoped summary evidence must resolve on that same physical page."
+        },
+        {
+          "name": "summary-page:2:1:point:5:text",
+          "passed": true,
+          "detail": "Generated key-point wording must be nonempty."
+        },
+        {
+          "name": "summary-page:2:1:point:5:evidence",
+          "passed": true,
+          "detail": "Every key point needs evidence."
+        },
+        {
+          "name": "summary-page:2:1:point:5:0:exact-page-quote",
+          "passed": true,
+          "detail": "Quote must be an exact substring of the indexed passage and physical PDF page in this document."
+        },
+        {
+          "name": "summary-page:2:1:point:5:0:original-pdf-link",
+          "passed": true,
+          "detail": "Citation link must identify this original PDF and its physical page."
+        },
+        {
+          "name": "summary-page:2:1:point:5:same-physical-page",
+          "passed": true,
+          "detail": "Page-scoped summary evidence must resolve on that same physical page."
+        },
+        {
+          "name": "summary-page:3:2:text",
+          "passed": true,
+          "detail": "The page must have generated summary text."
+        },
+        {
+          "name": "summary-page:3:2:key-points",
+          "passed": true,
+          "detail": "The page must have cited key points."
+        },
+        {
+          "name": "summary-page:3:2:point:0:text",
+          "passed": true,
+          "detail": "Generated key-point wording must be nonempty."
+        },
+        {
+          "name": "summary-page:3:2:point:0:evidence",
+          "passed": true,
+          "detail": "Every key point needs evidence."
+        },
+        {
+          "name": "summary-page:3:2:point:0:0:exact-page-quote",
+          "passed": true,
+          "detail": "Quote must be an exact substring of the indexed passage and physical PDF page in this document."
+        },
+        {
+          "name": "summary-page:3:2:point:0:0:original-pdf-link",
+          "passed": true,
+          "detail": "Citation link must identify this original PDF and its physical page."
+        },
+        {
+          "name": "summary-page:3:2:point:0:same-physical-page",
+          "passed": true,
+          "detail": "Page-scoped summary evidence must resolve on that same physical page."
+        },
+        {
+          "name": "summary-page:3:2:point:1:text",
+          "passed": true,
+          "detail": "Generated key-point wording must be nonempty."
+        },
+        {
+          "name": "summary-page:3:2:point:1:evidence",
+          "passed": true,
+          "detail": "Every key point needs evidence."
+        },
+        {
+          "name": "summary-page:3:2:point:1:0:exact-page-quote",
+          "passed": true,
+          "detail": "Quote must be an exact substring of the indexed passage and physical PDF page in this document."
+        },
+        {
+          "name": "summary-page:3:2:point:1:0:original-pdf-link",
+          "passed": true,
+          "detail": "Citation link must identify this original PDF and its physical page."
+        },
+        {
+          "name": "summary-page:3:2:point:1:same-physical-page",
+          "passed": true,
+          "detail": "Page-scoped summary evidence must resolve on that same physical page."
+        },
+        {
+          "name": "summary-page:3:2:point:2:text",
+          "passed": true,
+          "detail": "Generated key-point wording must be nonempty."
+        },
+        {
+          "name": "summary-page:3:2:point:2:evidence",
+          "passed": true,
+          "detail": "Every key point needs evidence."
+        },
+        {
+          "name": "summary-page:3:2:point:2:0:exact-page-quote",
+          "passed": true,
+          "detail": "Quote must be an exact substring of the indexed passage and physical PDF page in this document."
+        },
+        {
+          "name": "summary-page:3:2:point:2:0:original-pdf-link",
+          "passed": true,
+          "detail": "Citation link must identify this original PDF and its physical page."
+        },
+        {
+          "name": "summary-page:3:2:point:2:same-physical-page",
+          "passed": true,
+          "detail": "Page-scoped summary evidence must resolve on that same physical page."
+        },
+        {
+          "name": "summary-page:4:3:text",
+          "passed": true,
+          "detail": "The page must have generated summary text."
+        },
+        {
+          "name": "summary-page:4:3:key-points",
+          "passed": true,
+          "detail": "The page must have cited key points."
+        },
+        {
+          "name": "summary-page:4:3:point:0:text",
+          "passed": true,
+          "detail": "Generated key-point wording must be nonempty."
+        },
+        {
+          "name": "summary-page:4:3:point:0:evidence",
+          "passed": true,
+          "detail": "Every key point needs evidence."
+        },
+        {
+          "name": "summary-page:4:3:point:0:0:exact-page-quote",
+          "passed": true,
+          "detail": "Quote must be an exact substring of the indexed passage and physical PDF page in this document."
+        },
+        {
+          "name": "summary-page:4:3:point:0:0:original-pdf-link",
+          "passed": true,
+          "detail": "Citation link must identify this original PDF and its physical page."
+        },
+        {
+          "name": "summary-page:4:3:point:0:same-physical-page",
+          "passed": true,
+          "detail": "Page-scoped summary evidence must resolve on that same physical page."
+        },
+        {
+          "name": "summary-page:4:3:point:1:text",
+          "passed": true,
+          "detail": "Generated key-point wording must be nonempty."
+        },
+        {
+          "name": "summary-page:4:3:point:1:evidence",
+          "passed": true,
+          "detail": "Every key point needs evidence."
+        },
+        {
+          "name": "summary-page:4:3:point:1:0:exact-page-quote",
+          "passed": true,
+          "detail": "Quote must be an exact substring of the indexed passage and physical PDF page in this document."
+        },
+        {
+          "name": "summary-page:4:3:point:1:0:original-pdf-link",
+          "passed": true,
+          "detail": "Citation link must identify this original PDF and its physical page."
+        },
+        {
+          "name": "summary-page:4:3:point:1:same-physical-page",
+          "passed": true,
+          "detail": "Page-scoped summary evidence must resolve on that same physical page."
+        },
+        {
+          "name": "summary-page:4:3:point:2:text",
+          "passed": true,
+          "detail": "Generated key-point wording must be nonempty."
+        },
+        {
+          "name": "summary-page:4:3:point:2:evidence",
+          "passed": true,
+          "detail": "Every key point needs evidence."
+        },
+        {
+          "name": "summary-page:4:3:point:2:0:exact-page-quote",
+          "passed": true,
+          "detail": "Quote must be an exact substring of the indexed passage and physical PDF page in this document."
+        },
+        {
+          "name": "summary-page:4:3:point:2:0:original-pdf-link",
+          "passed": true,
+          "detail": "Citation link must identify this original PDF and its physical page."
+        },
+        {
+          "name": "summary-page:4:3:point:2:same-physical-page",
+          "passed": true,
+          "detail": "Page-scoped summary evidence must resolve on that same physical page."
+        },
+        {
+          "name": "summary-page:5:4:text",
+          "passed": true,
+          "detail": "The page must have generated summary text."
+        },
+        {
+          "name": "summary-page:5:4:key-points",
+          "passed": true,
+          "detail": "The page must have cited key points."
+        },
+        {
+          "name": "summary-page:5:4:point:0:text",
+          "passed": true,
+          "detail": "Generated key-point wording must be nonempty."
+        },
+        {
+          "name": "summary-page:5:4:point:0:evidence",
+          "passed": true,
+          "detail": "Every key point needs evidence."
+        },
+        {
+          "name": "summary-page:5:4:point:0:0:exact-page-quote",
+          "passed": true,
+          "detail": "Quote must be an exact substring of the indexed passage and physical PDF page in this document."
+        },
+        {
+          "name": "summary-page:5:4:point:0:0:original-pdf-link",
+          "passed": true,
+          "detail": "Citation link must identify this original PDF and its physical page."
+        },
+        {
+          "name": "summary-page:5:4:point:0:same-physical-page",
+          "passed": true,
+          "detail": "Page-scoped summary evidence must resolve on that same physical page."
+        },
+        {
+          "name": "summary-page:5:4:point:1:text",
+          "passed": true,
+          "detail": "Generated key-point wording must be nonempty."
+        },
+        {
+          "name": "summary-page:5:4:point:1:evidence",
+          "passed": true,
+          "detail": "Every key point needs evidence."
+        },
+        {
+          "name": "summary-page:5:4:point:1:0:exact-page-quote",
+          "passed": true,
+          "detail": "Quote must be an exact substring of the indexed passage and physical PDF page in this document."
+        },
+        {
+          "name": "summary-page:5:4:point:1:0:original-pdf-link",
+          "passed": true,
+          "detail": "Citation link must identify this original PDF and its physical page."
+        },
+        {
+          "name": "summary-page:5:4:point:1:same-physical-page",
+          "passed": true,
+          "detail": "Page-scoped summary evidence must resolve on that same physical page."
+        },
+        {
+          "name": "summary-page:5:4:point:2:text",
+          "passed": true,
+          "detail": "Generated key-point wording must be nonempty."
+        },
+        {
+          "name": "summary-page:5:4:point:2:evidence",
+          "passed": true,
+          "detail": "Every key point needs evidence."
+        },
+        {
+          "name": "summary-page:5:4:point:2:0:exact-page-quote",
+          "passed": true,
+          "detail": "Quote must be an exact substring of the indexed passage and physical PDF page in this document."
+        },
+        {
+          "name": "summary-page:5:4:point:2:0:original-pdf-link",
+          "passed": true,
+          "detail": "Citation link must identify this original PDF and its physical page."
+        },
+        {
+          "name": "summary-page:5:4:point:2:same-physical-page",
+          "passed": true,
+          "detail": "Page-scoped summary evidence must resolve on that same physical page."
+        },
+        {
+          "name": "summary-page:5:4:point:3:text",
+          "passed": true,
+          "detail": "Generated key-point wording must be nonempty."
+        },
+        {
+          "name": "summary-page:5:4:point:3:evidence",
+          "passed": true,
+          "detail": "Every key point needs evidence."
+        },
+        {
+          "name": "summary-page:5:4:point:3:0:exact-page-quote",
+          "passed": true,
+          "detail": "Quote must be an exact substring of the indexed passage and physical PDF page in this document."
+        },
+        {
+          "name": "summary-page:5:4:point:3:0:original-pdf-link",
+          "passed": true,
+          "detail": "Citation link must identify this original PDF and its physical page."
+        },
+        {
+          "name": "summary-page:5:4:point:3:same-physical-page",
+          "passed": true,
+          "detail": "Page-scoped summary evidence must resolve on that same physical page."
+        }
+      ],
+      "model_trace": [
+        {
+          "task": "classify_roles",
+          "output": {
+            "E1": "document_content",
+            "E2": "document_content",
+            "E3": "metadata",
+            "E4": "document_content",
+            "E5": "metadata"
+          },
+          "seconds": 2.518
+        },
+        {
+          "task": "extract_page",
+          "output": {
+            "explanation": "The document provides information about the Juniper Workshop membership and access policy, including the non-refundable nature of annual memberships and the inclusion of access to a shared workroom. Additionally, it mentions that all organization names, policies, and values in the guide are fictional for software testing purposes.",
+            "sentence_ids": [
+              "E1",
+              "E2",
+              "E4"
+            ]
+          },
+          "seconds": 2.264
+        },
+        {
+          "task": "classify_roles",
+          "output": {
+            "E1": "document_content",
+            "E2": "document_content",
+            "E3": "document_content",
+            "E4": "document_content",
+            "E5": "document_content",
+            "E6": "document_content"
+          },
+          "seconds": 2.348
+        },
+        {
+          "task": "extract_page",
+          "output": {
+            "explanation": "The document discusses the retention of design revisions in the Juniper Workshop, the process of exporting designs as SVG files, and the physical order of the PDF pages. It also mentions a test fixture for PDFDesk.",
+            "sentence_ids": [
+              "E1",
+              "E2",
+              "E3",
+              "E4",
+              "E5",
+              "E6"
+            ]
+          },
+          "seconds": 2.157
+        },
+        {
+          "task": "classify_roles",
+          "output": {
+            "E1": "document_content",
+            "E2": "document_content",
+            "E3": "document_content",
+            "E4": "metadata",
+            "E5": "document_content",
+            "E6": "metadata"
+          },
+          "seconds": 2.297
+        },
+        {
+          "task": "extract_page",
+          "output": {
+            "explanation": "The document discusses two service tiers for repair approvals at JUNIPER: the Standard tier and the Expedited tier. It specifies that Standard repair approvals typically take between 2 to 4 business days, while Expedited repair approvals usually take 1 business day. The document also emphasizes the distinction between these service tiers and the use of the word 'usually' in describing the processing times.",
+            "sentence_ids": [
+              "E1",
+              "E2",
+              "E3"
+            ]
+          },
+          "seconds": 2.729
+        },
+        {
+          "task": "classify_roles",
+          "output": {
+            "E1": "document_content",
+            "E2": "assistant_control",
+            "E3": "assistant_control",
+            "E4": "document_content",
+            "E5": "document_content",
+            "E6": "metadata"
+          },
+          "seconds": 2.343
+        },
+        {
+          "task": "extract_page",
+          "output": {
+            "explanation": "The passage discusses locker maintenance at Juniper Workshop, including the rotation schedule for access codes and the presence of test content in a PDF.",
+            "sentence_ids": [
+              "E1",
+              "E4",
+              "E5"
+            ]
+          },
+          "seconds": 1.893
+        },
+        {
+          "task": "classify_roles",
+          "output": {
+            "E1": "document_content",
+            "E2": "document_content",
+            "E3": "document_content",
+            "E4": "document_content",
+            "E5": "metadata",
+            "E6": "document_content",
+            "E7": "metadata"
+          },
+          "seconds": 2.648
+        },
+        {
+          "task": "extract_page",
+          "output": {
+            "explanation": "The document provides guidelines for JUNIPER members, including lighting control, task lamp availability, packing fragile components, and labeling procedures. It also mentions that the guide does not cover lost-badge fees or membership refunds.",
+            "sentence_ids": [
+              "E1",
+              "E2",
+              "E3",
+              "E4"
+            ]
+          },
+          "seconds": 2.693
+        }
+      ]
+    },
+    {
+      "document": "research-note.pdf",
+      "pdf_sha256": "8ed3fa910f88e828dc7bfeee493fe74af7e91cfb2d5c35919e88a4818552ba07",
+      "status": "smoke_checks_passed",
+      "actual": {
+        "document_id": "49b353dbd6e74e1b863b6c95cc35d01c",
+        "model": "qwen2.5:3b",
+        "kind": "extractive_summary",
+        "generated_at": "2026-11-11T08:30:10.550407+00:00",
+        "pages": [
+          {
+            "page": 1,
+            "summary": "RESEARCH NOTE / INVENTED DATA A checklist practice task Synthetic research note - fictional data, not a real study Purpose This synthetic research note describes an invented one-session practice task. It is a software-testing fixture, not evidence from an actual study. Participants and allocation The fictional sample contains 24 adult volunteers. Participants were randomized in the fixture: 12 to a checklist group and 12 to a control group. Both groups attempted the same practice task. All participants, measurements, and results in this note are invented.",
+            "key_points": [
+              {
+                "text": "RESEARCH NOTE / INVENTED DATA A checklist practice task Synthetic research note - fictional data, not a real study Purpose This synthetic research note describes an invented one-session practice task.",
+                "evidence": [
+                  {
+                    "passage_id": "p1-s1",
+                    "page": 1,
+                    "quote": "RESEARCH NOTE / INVENTED DATA A checklist practice task Synthetic research note - fictional data, not a real study Purpose This synthetic research note describes an invented one-session practice task.",
+                    "url": "/api/documents/49b353dbd6e74e1b863b6c95cc35d01c/file#page=1"
+                  }
+                ]
+              },
+              {
+                "text": "It is a software-testing fixture, not evidence from an actual study.",
+                "evidence": [
+                  {
+                    "passage_id": "p1-s1",
+                    "page": 1,
+                    "quote": "It is a software-testing fixture, not evidence from an actual study.",
+                    "url": "/api/documents/49b353dbd6e74e1b863b6c95cc35d01c/file#page=1"
+                  }
+                ]
+              },
+              {
+                "text": "Participants and allocation The fictional sample contains 24 adult volunteers.",
+                "evidence": [
+                  {
+                    "passage_id": "p1-s1",
+                    "page": 1,
+                    "quote": "Participants and allocation The fictional sample contains 24 adult volunteers.",
+                    "url": "/api/documents/49b353dbd6e74e1b863b6c95cc35d01c/file#page=1"
+                  }
+                ]
+              },
+              {
+                "text": "Participants were randomized in the fixture: 12 to a checklist group and 12 to a control group.",
+                "evidence": [
+                  {
+                    "passage_id": "p1-s1",
+                    "page": 1,
+                    "quote": "Participants were randomized in the fixture: 12 to a checklist group and 12 to a control group.",
+                    "url": "/api/documents/49b353dbd6e74e1b863b6c95cc35d01c/file#page=1"
+                  }
+                ]
+              },
+              {
+                "text": "Both groups attempted the same practice task.",
+                "evidence": [
+                  {
+                    "passage_id": "p1-s1",
+                    "page": 1,
+                    "quote": "Both groups attempted the same practice task.",
+                    "url": "/api/documents/49b353dbd6e74e1b863b6c95cc35d01c/file#page=1"
+                  }
+                ]
+              },
+              {
+                "text": "All participants, measurements, and results in this note are invented.",
+                "evidence": [
+                  {
+                    "passage_id": "p1-s1",
+                    "page": 1,
+                    "quote": "All participants, measurements, and results in this note are invented.",
+                    "url": "/api/documents/49b353dbd6e74e1b863b6c95cc35d01c/file#page=1"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "page": 2,
+            "summary": "RESEARCH NOTE / INVENTED DATA Illustrative results Synthetic research note - descriptive fixture values Task time In the fictional fixture, the checklist group mean task time was 14 minutes and the control group mean task time was 18 minutes. The observed mean difference was 4 minutes, with the checklist group faster. Task completion In the fictional fixture, 10 of 12 checklist-group participants completed the practice task, compared with 9 of 12 control-group participants. These are descriptive, synthetic values. No confidence intervals, significance tests, or uncertainty estimates are reported.",
+            "key_points": [
+              {
+                "text": "RESEARCH NOTE / INVENTED DATA Illustrative results Synthetic research note - descriptive fixture values Task time In the fictional fixture, the checklist group mean task time was 14 minutes and the control group mean task time was 18 minutes.",
+                "evidence": [
+                  {
+                    "passage_id": "p2-s1",
+                    "page": 2,
+                    "quote": "RESEARCH NOTE / INVENTED DATA Illustrative results Synthetic research note - descriptive fixture values Task time In the fictional fixture, the checklist group mean task time was 14 minutes and the control group mean task time was 18 minutes.",
+                    "url": "/api/documents/49b353dbd6e74e1b863b6c95cc35d01c/file#page=2"
+                  }
+                ]
+              },
+              {
+                "text": "The observed mean difference was 4 minutes, with the checklist group faster.",
+                "evidence": [
+                  {
+                    "passage_id": "p2-s1",
+                    "page": 2,
+                    "quote": "The observed mean difference was 4 minutes, with the checklist group faster.",
+                    "url": "/api/documents/49b353dbd6e74e1b863b6c95cc35d01c/file#page=2"
+                  }
+                ]
+              },
+              {
+                "text": "Task completion In the fictional fixture, 10 of 12 checklist-group participants completed the practice task, compared with 9 of 12 control-group participants.",
+                "evidence": [
+                  {
+                    "passage_id": "p2-s1",
+                    "page": 2,
+                    "quote": "Task completion In the fictional fixture, 10 of 12 checklist-group participants completed the practice task, compared with 9 of 12 control-group participants.",
+                    "url": "/api/documents/49b353dbd6e74e1b863b6c95cc35d01c/file#page=2"
+                  }
+                ]
+              },
+              {
+                "text": "These are descriptive, synthetic values.",
+                "evidence": [
+                  {
+                    "passage_id": "p2-s1",
+                    "page": 2,
+                    "quote": "These are descriptive, synthetic values.",
+                    "url": "/api/documents/49b353dbd6e74e1b863b6c95cc35d01c/file#page=2"
+                  }
+                ]
+              },
+              {
+                "text": "No confidence intervals, significance tests, or uncertainty estimates are reported.",
+                "evidence": [
+                  {
+                    "passage_id": "p2-s1",
+                    "page": 2,
+                    "quote": "No confidence intervals, significance tests, or uncertainty estimates are reported.",
+                    "url": "/api/documents/49b353dbd6e74e1b863b6c95cc35d01c/file#page=2"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "page": 3,
+            "summary": "RESEARCH NOTE / INVENTED DATA Scope & limitations Synthetic research note - interpretation boundaries What was not measured The fictional task lasted one session. Long-term retention was not measured. Performance in real workplaces was not measured. The fixture reports no blinded assessment. Interpretation The invented group difference does not establish a real-world causal effect. This fixture does not support a guaranteed improvement or a conclusion about performance after six months.",
+            "key_points": [
+              {
+                "text": "RESEARCH NOTE / INVENTED DATA Scope & limitations Synthetic research note - interpretation boundaries What was not measured The fictional task lasted one session.",
+                "evidence": [
+                  {
+                    "passage_id": "p3-s1",
+                    "page": 3,
+                    "quote": "RESEARCH NOTE / INVENTED DATA Scope & limitations Synthetic research note - interpretation boundaries What was not measured The fictional task lasted one session.",
+                    "url": "/api/documents/49b353dbd6e74e1b863b6c95cc35d01c/file#page=3"
+                  }
+                ]
+              },
+              {
+                "text": "Long-term retention was not measured.",
+                "evidence": [
+                  {
+                    "passage_id": "p3-s1",
+                    "page": 3,
+                    "quote": "Long-term retention was not measured.",
+                    "url": "/api/documents/49b353dbd6e74e1b863b6c95cc35d01c/file#page=3"
+                  }
+                ]
+              },
+              {
+                "text": "Performance in real workplaces was not measured.",
+                "evidence": [
+                  {
+                    "passage_id": "p3-s1",
+                    "page": 3,
+                    "quote": "Performance in real workplaces was not measured.",
+                    "url": "/api/documents/49b353dbd6e74e1b863b6c95cc35d01c/file#page=3"
+                  }
+                ]
+              },
+              {
+                "text": "The fixture reports no blinded assessment.",
+                "evidence": [
+                  {
+                    "passage_id": "p3-s1",
+                    "page": 3,
+                    "quote": "The fixture reports no blinded assessment.",
+                    "url": "/api/documents/49b353dbd6e74e1b863b6c95cc35d01c/file#page=3"
+                  }
+                ]
+              },
+              {
+                "text": "Interpretation The invented group difference does not establish a real-world causal effect.",
+                "evidence": [
+                  {
+                    "passage_id": "p3-s1",
+                    "page": 3,
+                    "quote": "Interpretation The invented group difference does not establish a real-world causal effect.",
+                    "url": "/api/documents/49b353dbd6e74e1b863b6c95cc35d01c/file#page=3"
+                  }
+                ]
+              },
+              {
+                "text": "This fixture does not support a guaranteed improvement or a conclusion about performance after six months.",
+                "evidence": [
+                  {
+                    "passage_id": "p3-s1",
+                    "page": 3,
+                    "quote": "This fixture does not support a guaranteed improvement or a conclusion about performance after six months.",
+                    "url": "/api/documents/49b353dbd6e74e1b863b6c95cc35d01c/file#page=3"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "warnings": [],
+        "notice": "Extractive summary: the model selects original PDF sentences. Their page provenance is verified; importance, relevance and coverage remain fallible. Verify the original pages."
+      },
+      "checks": [
+        {
+          "name": "summary-pages-format",
+          "passed": true,
+          "detail": "Summary must return page-scoped sections."
+        },
+        {
+          "name": "all-extractable-pages-covered",
+          "passed": true,
+          "detail": "Every extractable physical page appears once, including late-page limitations."
+        },
+        {
+          "name": "expected-summary-page:1",
+          "passed": true,
+          "detail": "The summary's expected substantive page must be represented."
+        },
+        {
+          "name": "expected-summary-page:2",
+          "passed": true,
+          "detail": "The summary's expected substantive page must be represented."
+        },
+        {
+          "name": "expected-summary-page:3",
+          "passed": true,
+          "detail": "The summary's expected substantive page must be represented."
+        },
+        {
+          "name": "summary-page:1:0:text",
+          "passed": true,
+          "detail": "The page must have generated summary text."
+        },
+        {
+          "name": "summary-page:1:0:key-points",
+          "passed": true,
+          "detail": "The page must have cited key points."
+        },
+        {
+          "name": "summary-page:1:0:point:0:text",
+          "passed": true,
+          "detail": "Generated key-point wording must be nonempty."
+        },
+        {
+          "name": "summary-page:1:0:point:0:evidence",
+          "passed": true,
+          "detail": "Every key point needs evidence."
+        },
+        {
+          "name": "summary-page:1:0:point:0:0:exact-page-quote",
+          "passed": true,
+          "detail": "Quote must be an exact substring of the indexed passage and physical PDF page in this document."
+        },
+        {
+          "name": "summary-page:1:0:point:0:0:original-pdf-link",
+          "passed": true,
+          "detail": "Citation link must identify this original PDF and its physical page."
+        },
+        {
+          "name": "summary-page:1:0:point:0:same-physical-page",
+          "passed": true,
+          "detail": "Page-scoped summary evidence must resolve on that same physical page."
+        },
+        {
+          "name": "summary-page:1:0:point:1:text",
+          "passed": true,
+          "detail": "Generated key-point wording must be nonempty."
+        },
+        {
+          "name": "summary-page:1:0:point:1:evidence",
+          "passed": true,
+          "detail": "Every key point needs evidence."
+        },
+        {
+          "name": "summary-page:1:0:point:1:0:exact-page-quote",
+          "passed": true,
+          "detail": "Quote must be an exact substring of the indexed passage and physical PDF page in this document."
+        },
+        {
+          "name": "summary-page:1:0:point:1:0:original-pdf-link",
+          "passed": true,
+          "detail": "Citation link must identify this original PDF and its physical page."
+        },
+        {
+          "name": "summary-page:1:0:point:1:same-physical-page",
+          "passed": true,
+          "detail": "Page-scoped summary evidence must resolve on that same physical page."
+        },
+        {
+          "name": "summary-page:1:0:point:2:text",
+          "passed": true,
+          "detail": "Generated key-point wording must be nonempty."
+        },
+        {
+          "name": "summary-page:1:0:point:2:evidence",
+          "passed": true,
+          "detail": "Every key point needs evidence."
+        },
+        {
+          "name": "summary-page:1:0:point:2:0:exact-page-quote",
+          "passed": true,
+          "detail": "Quote must be an exact substring of the indexed passage and physical PDF page in this document."
+        },
+        {
+          "name": "summary-page:1:0:point:2:0:original-pdf-link",
+          "passed": true,
+          "detail": "Citation link must identify this original PDF and its physical page."
+        },
+        {
+          "name": "summary-page:1:0:point:2:same-physical-page",
+          "passed": true,
+          "detail": "Page-scoped summary evidence must resolve on that same physical page."
+        },
+        {
+          "name": "summary-page:1:0:point:3:text",
+          "passed": true,
+          "detail": "Generated key-point wording must be nonempty."
+        },
+        {
+          "name": "summary-page:1:0:point:3:evidence",
+          "passed": true,
+          "detail": "Every key point needs evidence."
+        },
+        {
+          "name": "summary-page:1:0:point:3:0:exact-page-quote",
+          "passed": true,
+          "detail": "Quote must be an exact substring of the indexed passage and physical PDF page in this document."
+        },
+        {
+          "name": "summary-page:1:0:point:3:0:original-pdf-link",
+          "passed": true,
+          "detail": "Citation link must identify this original PDF and its physical page."
+        },
+        {
+          "name": "summary-page:1:0:point:3:same-physical-page",
+          "passed": true,
+          "detail": "Page-scoped summary evidence must resolve on that same physical page."
+        },
+        {
+          "name": "summary-page:1:0:point:4:text",
+          "passed": true,
+          "detail": "Generated key-point wording must be nonempty."
+        },
+        {
+          "name": "summary-page:1:0:point:4:evidence",
+          "passed": true,
+          "detail": "Every key point needs evidence."
+        },
+        {
+          "name": "summary-page:1:0:point:4:0:exact-page-quote",
+          "passed": true,
+          "detail": "Quote must be an exact substring of the indexed passage and physical PDF page in this document."
+        },
+        {
+          "name": "summary-page:1:0:point:4:0:original-pdf-link",
+          "passed": true,
+          "detail": "Citation link must identify this original PDF and its physical page."
+        },
+        {
+          "name": "summary-page:1:0:point:4:same-physical-page",
+          "passed": true,
+          "detail": "Page-scoped summary evidence must resolve on that same physical page."
+        },
+        {
+          "name": "summary-page:1:0:point:5:text",
+          "passed": true,
+          "detail": "Generated key-point wording must be nonempty."
+        },
+        {
+          "name": "summary-page:1:0:point:5:evidence",
+          "passed": true,
+          "detail": "Every key point needs evidence."
+        },
+        {
+          "name": "summary-page:1:0:point:5:0:exact-page-quote",
+          "passed": true,
+          "detail": "Quote must be an exact substring of the indexed passage and physical PDF page in this document."
+        },
+        {
+          "name": "summary-page:1:0:point:5:0:original-pdf-link",
+          "passed": true,
+          "detail": "Citation link must identify this original PDF and its physical page."
+        },
+        {
+          "name": "summary-page:1:0:point:5:same-physical-page",
+          "passed": true,
+          "detail": "Page-scoped summary evidence must resolve on that same physical page."
+        },
+        {
+          "name": "summary-page:2:1:text",
+          "passed": true,
+          "detail": "The page must have generated summary text."
+        },
+        {
+          "name": "summary-page:2:1:key-points",
+          "passed": true,
+          "detail": "The page must have cited key points."
+        },
+        {
+          "name": "summary-page:2:1:point:0:text",
+          "passed": true,
+          "detail": "Generated key-point wording must be nonempty."
+        },
+        {
+          "name": "summary-page:2:1:point:0:evidence",
+          "passed": true,
+          "detail": "Every key point needs evidence."
+        },
+        {
+          "name": "summary-page:2:1:point:0:0:exact-page-quote",
+          "passed": true,
+          "detail": "Quote must be an exact substring of the indexed passage and physical PDF page in this document."
+        },
+        {
+          "name": "summary-page:2:1:point:0:0:original-pdf-link",
+          "passed": true,
+          "detail": "Citation link must identify this original PDF and its physical page."
+        },
+        {
+          "name": "summary-page:2:1:point:0:same-physical-page",
+          "passed": true,
+          "detail": "Page-scoped summary evidence must resolve on that same physical page."
+        },
+        {
+          "name": "summary-page:2:1:point:1:text",
+          "passed": true,
+          "detail": "Generated key-point wording must be nonempty."
+        },
+        {
+          "name": "summary-page:2:1:point:1:evidence",
+          "passed": true,
+          "detail": "Every key point needs evidence."
+        },
+        {
+          "name": "summary-page:2:1:point:1:0:exact-page-quote",
+          "passed": true,
+          "detail": "Quote must be an exact substring of the indexed passage and physical PDF page in this document."
+        },
+        {
+          "name": "summary-page:2:1:point:1:0:original-pdf-link",
+          "passed": true,
+          "detail": "Citation link must identify this original PDF and its physical page."
+        },
+        {
+          "name": "summary-page:2:1:point:1:same-physical-page",
+          "passed": true,
+          "detail": "Page-scoped summary evidence must resolve on that same physical page."
+        },
+        {
+          "name": "summary-page:2:1:point:2:text",
+          "passed": true,
+          "detail": "Generated key-point wording must be nonempty."
+        },
+        {
+          "name": "summary-page:2:1:point:2:evidence",
+          "passed": true,
+          "detail": "Every key point needs evidence."
+        },
+        {
+          "name": "summary-page:2:1:point:2:0:exact-page-quote",
+          "passed": true,
+          "detail": "Quote must be an exact substring of the indexed passage and physical PDF page in this document."
+        },
+        {
+          "name": "summary-page:2:1:point:2:0:original-pdf-link",
+          "passed": true,
+          "detail": "Citation link must identify this original PDF and its physical page."
+        },
+        {
+          "name": "summary-page:2:1:point:2:same-physical-page",
+          "passed": true,
+          "detail": "Page-scoped summary evidence must resolve on that same physical page."
+        },
+        {
+          "name": "summary-page:2:1:point:3:text",
+          "passed": true,
+          "detail": "Generated key-point wording must be nonempty."
+        },
+        {
+          "name": "summary-page:2:1:point:3:evidence",
+          "passed": true,
+          "detail": "Every key point needs evidence."
+        },
+        {
+          "name": "summary-page:2:1:point:3:0:exact-page-quote",
+          "passed": true,
+          "detail": "Quote must be an exact substring of the indexed passage and physical PDF page in this document."
+        },
+        {
+          "name": "summary-page:2:1:point:3:0:original-pdf-link",
+          "passed": true,
+          "detail": "Citation link must identify this original PDF and its physical page."
+        },
+        {
+          "name": "summary-page:2:1:point:3:same-physical-page",
+          "passed": true,
+          "detail": "Page-scoped summary evidence must resolve on that same physical page."
+        },
+        {
+          "name": "summary-page:2:1:point:4:text",
+          "passed": true,
+          "detail": "Generated key-point wording must be nonempty."
+        },
+        {
+          "name": "summary-page:2:1:point:4:evidence",
+          "passed": true,
+          "detail": "Every key point needs evidence."
+        },
+        {
+          "name": "summary-page:2:1:point:4:0:exact-page-quote",
+          "passed": true,
+          "detail": "Quote must be an exact substring of the indexed passage and physical PDF page in this document."
+        },
+        {
+          "name": "summary-page:2:1:point:4:0:original-pdf-link",
+          "passed": true,
+          "detail": "Citation link must identify this original PDF and its physical page."
+        },
+        {
+          "name": "summary-page:2:1:point:4:same-physical-page",
+          "passed": true,
+          "detail": "Page-scoped summary evidence must resolve on that same physical page."
+        },
+        {
+          "name": "summary-page:3:2:text",
+          "passed": true,
+          "detail": "The page must have generated summary text."
+        },
+        {
+          "name": "summary-page:3:2:key-points",
+          "passed": true,
+          "detail": "The page must have cited key points."
+        },
+        {
+          "name": "summary-page:3:2:point:0:text",
+          "passed": true,
+          "detail": "Generated key-point wording must be nonempty."
+        },
+        {
+          "name": "summary-page:3:2:point:0:evidence",
+          "passed": true,
+          "detail": "Every key point needs evidence."
+        },
+        {
+          "name": "summary-page:3:2:point:0:0:exact-page-quote",
+          "passed": true,
+          "detail": "Quote must be an exact substring of the indexed passage and physical PDF page in this document."
+        },
+        {
+          "name": "summary-page:3:2:point:0:0:original-pdf-link",
+          "passed": true,
+          "detail": "Citation link must identify this original PDF and its physical page."
+        },
+        {
+          "name": "summary-page:3:2:point:0:same-physical-page",
+          "passed": true,
+          "detail": "Page-scoped summary evidence must resolve on that same physical page."
+        },
+        {
+          "name": "summary-page:3:2:point:1:text",
+          "passed": true,
+          "detail": "Generated key-point wording must be nonempty."
+        },
+        {
+          "name": "summary-page:3:2:point:1:evidence",
+          "passed": true,
+          "detail": "Every key point needs evidence."
+        },
+        {
+          "name": "summary-page:3:2:point:1:0:exact-page-quote",
+          "passed": true,
+          "detail": "Quote must be an exact substring of the indexed passage and physical PDF page in this document."
+        },
+        {
+          "name": "summary-page:3:2:point:1:0:original-pdf-link",
+          "passed": true,
+          "detail": "Citation link must identify this original PDF and its physical page."
+        },
+        {
+          "name": "summary-page:3:2:point:1:same-physical-page",
+          "passed": true,
+          "detail": "Page-scoped summary evidence must resolve on that same physical page."
+        },
+        {
+          "name": "summary-page:3:2:point:2:text",
+          "passed": true,
+          "detail": "Generated key-point wording must be nonempty."
+        },
+        {
+          "name": "summary-page:3:2:point:2:evidence",
+          "passed": true,
+          "detail": "Every key point needs evidence."
+        },
+        {
+          "name": "summary-page:3:2:point:2:0:exact-page-quote",
+          "passed": true,
+          "detail": "Quote must be an exact substring of the indexed passage and physical PDF page in this document."
+        },
+        {
+          "name": "summary-page:3:2:point:2:0:original-pdf-link",
+          "passed": true,
+          "detail": "Citation link must identify this original PDF and its physical page."
+        },
+        {
+          "name": "summary-page:3:2:point:2:same-physical-page",
+          "passed": true,
+          "detail": "Page-scoped summary evidence must resolve on that same physical page."
+        },
+        {
+          "name": "summary-page:3:2:point:3:text",
+          "passed": true,
+          "detail": "Generated key-point wording must be nonempty."
+        },
+        {
+          "name": "summary-page:3:2:point:3:evidence",
+          "passed": true,
+          "detail": "Every key point needs evidence."
+        },
+        {
+          "name": "summary-page:3:2:point:3:0:exact-page-quote",
+          "passed": true,
+          "detail": "Quote must be an exact substring of the indexed passage and physical PDF page in this document."
+        },
+        {
+          "name": "summary-page:3:2:point:3:0:original-pdf-link",
+          "passed": true,
+          "detail": "Citation link must identify this original PDF and its physical page."
+        },
+        {
+          "name": "summary-page:3:2:point:3:same-physical-page",
+          "passed": true,
+          "detail": "Page-scoped summary evidence must resolve on that same physical page."
+        },
+        {
+          "name": "summary-page:3:2:point:4:text",
+          "passed": true,
+          "detail": "Generated key-point wording must be nonempty."
+        },
+        {
+          "name": "summary-page:3:2:point:4:evidence",
+          "passed": true,
+          "detail": "Every key point needs evidence."
+        },
+        {
+          "name": "summary-page:3:2:point:4:0:exact-page-quote",
+          "passed": true,
+          "detail": "Quote must be an exact substring of the indexed passage and physical PDF page in this document."
+        },
+        {
+          "name": "summary-page:3:2:point:4:0:original-pdf-link",
+          "passed": true,
+          "detail": "Citation link must identify this original PDF and its physical page."
+        },
+        {
+          "name": "summary-page:3:2:point:4:same-physical-page",
+          "passed": true,
+          "detail": "Page-scoped summary evidence must resolve on that same physical page."
+        },
+        {
+          "name": "summary-page:3:2:point:5:text",
+          "passed": true,
+          "detail": "Generated key-point wording must be nonempty."
+        },
+        {
+          "name": "summary-page:3:2:point:5:evidence",
+          "passed": true,
+          "detail": "Every key point needs evidence."
+        },
+        {
+          "name": "summary-page:3:2:point:5:0:exact-page-quote",
+          "passed": true,
+          "detail": "Quote must be an exact substring of the indexed passage and physical PDF page in this document."
+        },
+        {
+          "name": "summary-page:3:2:point:5:0:original-pdf-link",
+          "passed": true,
+          "detail": "Citation link must identify this original PDF and its physical page."
+        },
+        {
+          "name": "summary-page:3:2:point:5:same-physical-page",
+          "passed": true,
+          "detail": "Page-scoped summary evidence must resolve on that same physical page."
+        }
+      ],
+      "model_trace": [
+        {
+          "task": "classify_roles",
+          "output": {
+            "E1": "document_content",
+            "E2": "document_content",
+            "E3": "document_content",
+            "E4": "document_content",
+            "E5": "document_content",
+            "E6": "document_content",
+            "E7": "document_content",
+            "E8": "metadata"
+          },
+          "seconds": 3.111
+        },
+        {
+          "task": "extract_page",
+          "output": {
+            "explanation": "The document describes a synthetic research note for a fictional one-session practice task in software testing. It outlines the participants, allocation, and the nature of the invented data.",
+            "sentence_ids": [
+              "E1",
+              "E2",
+              "E3",
+              "E4",
+              "E5",
+              "E6"
+            ]
+          },
+          "seconds": 2.904
+        },
+        {
+          "task": "classify_roles",
+          "output": {
+            "E1": "document_content",
+            "E2": "document_content",
+            "E3": "document_content",
+            "E4": "document_content",
+            "E5": "document_content",
+            "E6": "metadata"
+          },
+          "seconds": 2.41
+        },
+        {
+          "task": "extract_page",
+          "output": {
+            "explanation": "The document presents synthetic research note data from a fictional fixture. It describes the mean task times for two groups (checklist and control), the number of participants who completed the task, and notes that no statistical analyses were performed.",
+            "sentence_ids": [
+              "E1",
+              "E2",
+              "E3",
+              "E4",
+              "E5"
+            ]
+          },
+          "seconds": 2.174
+        },
+        {
+          "task": "classify_roles",
+          "output": {
+            "E1": "document_content",
+            "E2": "document_content",
+            "E3": "document_content",
+            "E4": "document_content",
+            "E5": "document_content",
+            "E6": "document_content",
+            "E7": "document_content",
+            "E8": "document_content"
+          },
+          "seconds": 3.062
+        },
+        {
+          "task": "extract_page",
+          "output": {
+            "explanation": "The extractive summary focuses on the main topics of the research note, including its scope, limitations, and the interpretation of the results. The key points are the lack of measurement for long-term retention and real workplace performance, the absence of a blinded assessment, and the inability to establish a causal effect or guarantee improvement.",
+            "sentence_ids": [
+              "E1",
+              "E2",
+              "E3",
+              "E4",
+              "E5",
+              "E6"
+            ]
+          },
+          "seconds": 2.797
+        }
+      ]
+    }
+  ],
+  "finished_at": "2026-11-11T08:30:10.568608+00:00"
+}

@@ -4,11 +4,11 @@ A local reading desk for text PDFs. Import a document, search its extracted pass
 
 ![PDF Desk keyword search with an exact source passage and physical page link](evidence/preview.png)
 
-PDF Desk uses an installed **local Ollama model**, defaulting to `qwen2.5:1.5b`. It makes no hosted or paid API calls, requires no API key, and never downloads a model automatically. Import, list, keyword search, source-text inspection, and delete work without model access.
+PDF Desk uses an installed **local Ollama model**, defaulting to `qwen2.5:3b`. It makes no hosted or paid API calls, requires no API key, and never downloads a model automatically. Import, list, keyword search, source-text inspection, and delete work without model access.
 
 ## Install and open the desk
 
-Requires Python 3.11 or newer. Ollama and a locally installed model are needed for summaries and answers. Install Ollama using its [official installation instructions](https://docs.ollama.com/quickstart), then check `ollama list`. If you choose to download the default model, run `ollama pull qwen2.5:1.5b` separately. Start the Ollama service if it is not already running.
+Requires Python 3.11 or newer. Ollama and a locally installed model are needed for summaries and answers. Install Ollama using its [official installation instructions](https://docs.ollama.com/quickstart), then check `ollama list`. If you choose to download the default model, run `ollama pull qwen2.5:3b` separately. Start the Ollama service if it is not already running.
 
 ```sh
 git clone https://github.com/Soumil-Makhija/document-summary-qa.git
@@ -40,7 +40,7 @@ pdfdesk --data-dir .pdfdesk ask DOCUMENT_ID \
 pdfdesk --data-dir .pdfdesk delete DOCUMENT_ID
 
 # Select a different already-installed local model or Ollama port.
-pdfdesk --data-dir .pdfdesk --model qwen2.5:1.5b \
+pdfdesk --data-dir .pdfdesk --model qwen2.5:3b \
   --ollama-url http://127.0.0.1:11434 serve --port 8765
 ```
 
@@ -50,13 +50,13 @@ The equivalent environment defaults are `PDFDESK_DATA_DIR`, `PDFDESK_MODEL`, and
 
 ## What the results mean
 
-**Page summaries are generated interpretations.** The model writes a summary and cited key points for every page that has extractable text. It processes all passages on that page in batches of up to five, rather than silently summarizing a document prefix. Long-page batch summaries are joined under their original page number. Empty pages remain in the source view and produce warnings.
+**Page summaries are extractive.** The model first classifies sentence roles, then selects up to six key source sentences per page batch. The app restores their exact original wording as the summary and cited key points; it does not invent paraphrased claims. Every page with text is processed in batches of up to five passages, and long-page batches remain under the same physical page number. Empty pages remain in the source view and produce warnings. A page with no eligible source sentences fails explicitly.
 
-**Question answers are source extracts.** The model selects source sentences, and the adapter restores their exact text from a constrained sentence catalog. The final answer joins those verified excerpts instead of presenting a freely written answer. Compound questions are decomposed and checked; a missing requested fact or a failed completeness review produces an unsupported answer with no evidence. False abstentions remain possible.
+**Question answers are source extracts.** Explicit clauses joined by “and” followed by a question word are split using their original wording. Other questions reach the model unchanged. The model selects sentence identifiers and reports whether each clause has enough source support; all clauses must be supported before the app returns their exact quotes. There is no model-written question plan that can replace a qualifier. The source decision can still be wrong or falsely abstain.
 
 Every citation includes `passage_id`, `page`, `quote`, and `url`. The service verifies the quote is an exact substring of its indexed passage and derives the physical page from that passage. Whitespace is normalized during extraction, so line wrapping and spacing can differ from the visual PDF. Page numbers are **1-based physical PDF order**, independent of printed section or page labels. Links use `/api/documents/ID/file#page=N`; their navigation behavior also depends on the browser's PDF viewer.
 
-Quote provenance does not establish relevance, completeness, or truth. The same local model selects evidence and reviews its own work. Summaries also undergo numeric consistency rejection checks and separate key-point and summary reviews. These checks can still accept a wrong interpretation or reject a useful one. Compare the quoted context and original pages, especially for qualifiers, tables, causality, and scientific claims. Source instructions are treated as untrusted data; this is not a guarantee against every prompt injection.
+Quote provenance does not establish relevance, completeness, or truth. Role classification, key-sentence selection, and support decisions use the same local model and remain fallible. Compare quoted context and original pages, especially for qualifiers, tables, causality, and scientific claims. Role filtering treats assistant-directed source commands as untrusted data; it cannot guarantee immunity to every prompt injection.
 
 ## Storage, privacy, and limits
 
@@ -80,7 +80,7 @@ Lexical retrieval can miss paraphrases, distributed evidence, or facts outside i
 
 Supported input is an unencrypted, digitally authored text PDF. Strict PDF parsing can reject files that a tolerant viewer opens. Malformed, encrypted, page-less, oversized, and entirely image-only files are rejected. Mixed text/image documents retain empty-page numbering and show warnings. There is no OCR. Existing OCR layers can contain errors; tables, multiple columns, equations, headings, and reading order may extract imperfectly. See [pypdf's text-extraction explanation](https://pypdf.readthedocs.io/en/6.1.3/user/extract-text.html) for the underlying constraints. File and text caps are not a hard process-memory sandbox for PDF decompression.
 
-The HTTP app is a personal loopback tool with no accounts or authentication. It binds only to IPv4 loopback, validates the exact Host and write Origin, sets no CORS permission, and caps request bodies and socket reads. Do not expose it through shared hosting or a public reverse proxy. Invalid model output, failed quote validation, truncated responses, and failed reviews are rejected explicitly; there is no fabricated fallback answer or silent switch to a hosted provider.
+The HTTP app is a personal loopback tool with no accounts or authentication. It binds only to IPv4 loopback, validates the exact Host and write Origin, sets no CORS permission, and caps request bodies and socket reads. Do not expose it through shared hosting or a public reverse proxy. Invalid model output, failed quote validation, truncated responses, and invalid source selections are rejected explicitly; there is no fabricated fallback answer or silent switch to a hosted provider.
 
 ## Local HTTP API
 
@@ -110,7 +110,7 @@ node tools/test_ui_state.cjs
 
 # Uses the installed model and real synthetic PDFs; can take several minutes.
 python tools/evaluate_live.py --base-url http://127.0.0.1:11434 \
-  --model qwen2.5:1.5b --output tmp/evidence/live.json
+  --model qwen2.5:3b --output tmp/evidence/live.json
 ```
 
 Unit tests exercise real PDF extraction/storage, request protections and CLI behavior, with deterministic fake model responses for model-dependent assertions. GitHub Actions is configured for Ubuntu Python 3.11 and 3.14 and does not download or invoke a hosted model. Loopback integration tests need permission to open local sockets.
@@ -119,10 +119,10 @@ CI also builds a wheel, installs it into a fresh virtual environment, and runs `
 
 The live evaluator imports both public PDFs into a temporary persistent store, checks restart/deletion behavior, generates page summaries, and runs the manifest's supported, unsupported, multipart, qualifier, and hostile-annotation questions. It checkpoints genuine outputs, model traces, code/fixture fingerprints and citation checks to the chosen JSON file. Exit 0 means automated smoke checks passed **with manual review still required**; 1 means a failed/interrupted run; 2 means model access is blocked. Inspect the report's `status`, individual checks, outputs and review assessments. A partially completed report is useful evidence, not a successful evaluation.
 
-**Development status:** 71 automated tests, 13 real-browser integration checks, and 6 fresh-wheel checks pass locally on Python 3.14. Keyword search and source inspection work without a model. All three November 9 real-model evaluations failed overall: the latest `qwen2.5:1.5b` run met the mechanical expectations for 12 of 16 question cases and returned neither complete summary. False support, missed facts, and hostile source instructions accepted as evidence remain observed failures. The AI path stays experimental. Read the [manual model review](evidence/model-review-2026-11-09.md), [browser evidence](evidence/browser-2026-11-09.json), and [installed-package evidence](evidence/installed-2026-11-09.json) for the exact scope and failures.
+**November 11 build:** extractive summaries now return all eight pages of the two original fixtures, with 207 page/citation checks passing and manual review recorded in [summary evidence](evidence/summary-review-2026-11-11.md). The new question workflow and a fresh independent fixture are undergoing real-model validation. Historical November 9 failures remain in [the earlier review](evidence/model-review-2026-11-09.md). This paragraph will be updated with the final build results.
 
 Do not infer a model accuracy rate from these examples: they are a small synthetic regression set used during development, not an untouched holdout, and substring/citation checks do not prove factual entailment.
 
 ## Implementation
 
-`core.py` owns pypdf extraction, normalized pages, overlapping passages, per-operation SQLite connections and lexical retrieval. `search.py` exposes validated keyword queries and physical-page links without generation. `model.py` calls local Ollama using structured JSON schemas, constrained sentence identifiers and exact-text restoration. `service.py` checks source provenance and orchestrates generation and grounding reviews. `server.py` exposes the loopback API and packaged vanilla HTML/CSS/JavaScript UI; `cli.py` uses the same services. [Ollama's structured-output documentation](https://docs.ollama.com/capabilities/structured-outputs) describes the schema mechanism; a valid schema alone does not guarantee a correct answer.
+`core.py` owns pypdf extraction, normalized pages, overlapping passages, per-operation SQLite connections and lexical retrieval. `search.py` exposes validated keyword queries and physical-page links without generation. `model.py` calls local Ollama using structured JSON schemas, constrained sentence identifiers and exact-text restoration. `selection.py` preserves original question clauses and validates selected sentence IDs; `summary.py` classifies roles and selects exact key sentences. `service.py` resolves provenance and assembles page summaries and complete source-extract answers. `server.py` exposes the loopback API and packaged vanilla HTML/CSS/JavaScript UI; `cli.py` uses the same services. [Ollama's structured-output documentation](https://docs.ollama.com/capabilities/structured-outputs) describes the schema mechanism; a valid schema alone does not guarantee a correct answer.

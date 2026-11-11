@@ -40,7 +40,7 @@
       <section id="document-workspace" class="hidden" aria-labelledby="document-title">
         <div class="document-heading"><div><p class="eyebrow">ON YOUR DESK</p><h1 id="document-title"></h1><p id="document-meta" class="document-meta"></p></div><div class="document-actions"><a id="original-link" class="button secondary" target="_blank" rel="noopener">Open original <span aria-hidden="true">↗</span></a><button id="delete-document" class="icon-button" type="button" aria-label="Delete this document" title="Delete document">⌫</button></div></div>
         <div id="document-warnings" class="notice warning hidden" role="status"></div>
-        <p class="notice warning">AI summaries and answers are experimental. Verify claims and page citations against the original PDF.</p>
+        <p class="notice warning">The model selects source excerpts for summaries and answers. Check their relevance and context in the original PDF.</p>
         <div class="tabs" role="tablist" aria-label="Reading tools">
           <button id="tab-summary" class="tab active" role="tab" aria-selected="true" aria-controls="panel-summary" tabindex="0" data-tab="summary">Page summaries</button>
           <button id="tab-questions" class="tab" role="tab" aria-selected="false" aria-controls="panel-questions" tabindex="-1" data-tab="questions">Ask the document</button>
@@ -48,7 +48,7 @@
         </div>
 
         <section id="panel-summary" class="tool-panel" role="tabpanel" aria-labelledby="tab-summary">
-          <div class="section-intro"><div><p class="eyebrow">THE BIG PICTURE</p><h2>A guided read, with receipts.</h2><p>Generated interpretations of each page, paired with exact supporting passages.</p></div><button id="generate-summary" class="button primary" type="button">Summarize pages <span aria-hidden="true">✦</span></button></div>
+          <div class="section-intro"><div><p class="eyebrow">THE BIG PICTURE</p><h2>A guided read, with receipts.</h2><p>Model-selected key sentences from each page, paired with original page links.</p></div><button id="generate-summary" class="button primary" type="button">Summarize pages <span aria-hidden="true">✦</span></button></div>
           <p id="summary-status" class="status" role="status" aria-live="polite"></p>
           <div id="summary-error" class="notice error hidden" role="alert"></div>
           <div id="summary-results"></div>

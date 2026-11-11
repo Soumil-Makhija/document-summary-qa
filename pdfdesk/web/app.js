@@ -67,7 +67,7 @@ function renderSummary(data) {
   for (const page of data.pages || []) {
     const card = element('article', 'summary-card');
     const heading = element('div', 'card-heading'); heading.append(element('span', 'page-label', `PAGE ${String(page.page).padStart(2, '0')}`), sourceLink(id, page.page, 'View original page ↗'));
-    card.append(heading, element('span', 'interpretation-label', 'GENERATED INTERPRETATION'), element('p', 'summary-copy', page.summary || 'No summary was returned for this page.'));
+    card.append(heading, element('span', 'interpretation-label', data.kind === 'extractive_summary' ? 'MODEL-SELECTED SOURCE EXTRACTS' : 'GENERATED INTERPRETATION'), element('p', 'summary-copy', page.summary || 'No summary was returned for this page.'));
     if (page.key_points?.length) {
       const points = element('ul', 'key-points');
       for (const point of page.key_points) {
@@ -79,7 +79,9 @@ function renderSummary(data) {
     }
     results.append(card);
   }
-  results.append(element('p', 'result-meta', `Generated with ${data.model || 'the configured model'}. Interpretations are model-generated; quoted excerpts come from the extracted PDF text.`));
+  results.append(element('p', 'result-meta', data.kind === 'extractive_summary'
+    ? `Selected with ${data.model || 'the configured model'}. Wording comes directly from the PDF; the model's selection may miss context. Check the original pages.`
+    : `Generated with ${data.model || 'the configured model'}. Interpretations are model-generated; quoted excerpts come from the extracted PDF text.`));
 }
 function renderAnswer(data) {
   const results = $('answer-results'); results.replaceChildren();

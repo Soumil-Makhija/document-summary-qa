@@ -27,7 +27,7 @@ def _port(value):
 def parser():
     result = argparse.ArgumentParser(description="Local PDF summaries and evidence-grounded answers.")
     result.add_argument("--data-dir", type=Path, default=Path(os.environ.get("PDFDESK_DATA_DIR", ".pdfdesk")))
-    result.add_argument("--model", default=os.environ.get("PDFDESK_MODEL", "qwen2.5:1.5b"))
+    result.add_argument("--model", default=os.environ.get("PDFDESK_MODEL", "qwen2.5:3b"))
     result.add_argument("--ollama-url", default=os.environ.get("PDFDESK_OLLAMA_URL", "http://127.0.0.1:11434"))
     commands = result.add_subparsers(dest="command", required=True)
     serve = commands.add_parser("serve", help="Open the local browser reading desk.")

@@ -319,7 +319,7 @@ def exit_code(report):
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--base-url", default="http://127.0.0.1:11434")
-    parser.add_argument("--model", default="qwen2.5:1.5b")
+    parser.add_argument("--model", default="qwen2.5:3b")
     parser.add_argument("--output", type=Path, default=Path("evidence/live.json"))
     args = parser.parse_args(argv)
     report = run_evaluation(args.base_url, args.model, args.output)
