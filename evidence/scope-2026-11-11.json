@@ -1,0 +1,289 @@
+{
+  "schema_version": 1,
+  "started_at": "2026-11-11T17:26:46.589461+00:00",
+  "status": "smoke_checks_passed_manual_review_required",
+  "model": "qwen3:4b-instruct",
+  "scope": "Direct real-model selection regression with public synthetic inline indexed passages; PDF extraction is not exercised.",
+  "holdout": false,
+  "manual_review_required": true,
+  "application_code_sha256": {
+    "pdfdesk/model.py": "3e5652ef9635897ff78eb7a58138955f04ce3dd0606e40f689afdd336ff65d74",
+    "pdfdesk/selection.py": "15deeb2b2fbc4769676c4fc800312df9b4d9adc8e09cf3b02f26bec4b9a49668"
+  },
+  "cases": [
+    {
+      "id": "monthly-pronoun-missing",
+      "question": "For monthly memberships, what access is included and are they refundable?",
+      "sources": [
+        {
+          "id": "p1-s1",
+          "page": 1,
+          "text": "Monthly memberships include studio access. Annual memberships are non-refundable. Monthly refund terms are not specified."
+        }
+      ],
+      "expected": {
+        "supported": false,
+        "required_terms": []
+      },
+      "status": "smoke_checks_passed",
+      "actual": {
+        "supported": false,
+        "answer": "",
+        "evidence": []
+      },
+      "checks": {
+        "support": true,
+        "terms": true,
+        "exact_sources": true
+      },
+      "model_trace": [
+        {
+          "task": "select_answer",
+          "output": {
+            "explanation": "The question asks for what access is included in monthly memberships. The SOURCE DATA contains a sentence (E1) that states 'Monthly memberships include studio access.' This directly answers the part of the question about access included in monthly memberships. The second part of the question (whether they are refundable) is not asked here, so it is not relevant to this focused clause. The requested fact is present and explicitly stated in the source with the same subject (monthly memberships) and context (access included).",
+            "sentence_ids": [
+              "E1"
+            ],
+            "status": "answered"
+          },
+          "seconds": 26.433
+        },
+        {
+          "task": "select_answer",
+          "output": {
+            "explanation": "The question asks specifically whether monthly memberships are refundable. The SOURCE DATA includes a sentence (E3) stating 'Monthly refund terms are not specified,' which indicates that the refundability of monthly memberships is not clearly defined or provided. This means the source does not explicitly state whether they are refundable or not. Therefore, the fact requested (refundability of monthly memberships) is missing in the source data with a clear answer.",
+            "sentence_ids": [],
+            "status": "missing"
+          },
+          "seconds": 28.241
+        }
+      ]
+    },
+    {
+      "id": "monthly-pronoun-supported",
+      "question": "For monthly memberships, what access is included and are they refundable?",
+      "sources": [
+        {
+          "id": "p1-s1",
+          "page": 1,
+          "text": "Monthly memberships include studio access. Annual memberships are non-refundable. Monthly memberships are refundable within 7 days of purchase."
+        }
+      ],
+      "expected": {
+        "supported": true,
+        "required_terms": [
+          "Monthly memberships include studio access.",
+          "Monthly memberships are refundable within 7 days"
+        ]
+      },
+      "status": "smoke_checks_passed",
+      "actual": {
+        "supported": true,
+        "answer": "Monthly memberships include studio access.\n\nMonthly memberships are refundable within 7 days of purchase.",
+        "evidence": [
+          {
+            "passage_id": "p1-s1",
+            "page": 1,
+            "quote": "Monthly memberships include studio access."
+          },
+          {
+            "passage_id": "p1-s1",
+            "page": 1,
+            "quote": "Monthly memberships are refundable within 7 days of purchase."
+          }
+        ]
+      },
+      "checks": {
+        "support": true,
+        "terms": true,
+        "exact_sources": true
+      },
+      "model_trace": [
+        {
+          "task": "select_answer",
+          "output": {
+            "explanation": "The question asks for what access is included in monthly memberships. The SOURCE DATA contains a sentence (E1) that states 'Monthly memberships include studio access.' This directly answers the part of the question about access included in monthly memberships. The second part of the question (whether they are refundable) is not asked here, so it is not relevant to this focused clause. All requested facts are present with the same subject (monthly memberships), population (memberships), and context (access included), making the answer complete and directly supported by the source.",
+            "sentence_ids": [
+              "E1"
+            ],
+            "status": "answered"
+          },
+          "seconds": 20.07
+        },
+        {
+          "task": "select_answer",
+          "output": {
+            "explanation": "The question asks specifically whether monthly memberships are refundable. The SOURCE DATA includes a sentence (E3) that states 'Monthly memberships are refundable within 7 days of purchase.' This directly answers the query about refundability for monthly memberships. The sentence explicitly addresses the condition of refundability with a time frame, matching the subject (monthly memberships) and the specific question (are they refundable?). All required facts are present with the same subject, population, and certainty as in the original question.",
+            "sentence_ids": [
+              "E3"
+            ],
+            "status": "answered"
+          },
+          "seconds": 30.462
+        }
+      ]
+    },
+    {
+      "id": "year-tier-missing",
+      "question": "For 2025 standard accounts, how many files can be stored and is export available?",
+      "sources": [
+        {
+          "id": "p1-s1",
+          "page": 1,
+          "text": "In 2024, standard accounts stored up to 30 files. In 2024, export was available. In 2025, standard accounts store up to 40 files. The guide does not state whether export is available for 2025 standard accounts."
+        }
+      ],
+      "expected": {
+        "supported": false,
+        "required_terms": []
+      },
+      "status": "smoke_checks_passed",
+      "actual": {
+        "supported": false,
+        "answer": "",
+        "evidence": []
+      },
+      "checks": {
+        "support": true,
+        "terms": true,
+        "exact_sources": true
+      },
+      "model_trace": [
+        {
+          "task": "select_answer",
+          "output": {
+            "explanation": "The question asks for the number of files that can be stored for 2025 standard accounts. The SOURCE DATA contains a sentence (E3) stating 'In 2025, standard accounts store up to 40 files.' This directly answers the query about storage capacity for 2025 standard accounts. The question does not ask about export availability, so that part is irrelevant. All required facts are present with the same subject (standard accounts), time period (2025), and units (number of files). The storage capacity is explicitly stated and matches the requested scope.",
+            "sentence_ids": [
+              "E3"
+            ],
+            "status": "answered"
+          },
+          "seconds": 32.313
+        },
+        {
+          "task": "select_answer",
+          "output": {
+            "explanation": "The question asks specifically whether export is available for 2025 standard accounts. The SOURCE DATA includes two relevant sentences: E2 states that in 2024, export was available, but this is not about 2025. E4 states that the guide does not state whether export is available for 2025 standard accounts. This indicates a lack of explicit information about export availability for 2025. The question is about 2025 standard accounts, and no sentence in the source explicitly confirms or denies export availability for that year. Therefore, the required fact is missing.",
+            "sentence_ids": [],
+            "status": "missing"
+          },
+          "seconds": 43.556
+        }
+      ]
+    },
+    {
+      "id": "year-tier-supported",
+      "question": "For 2024 standard accounts, how many files can be stored and is export available?",
+      "sources": [
+        {
+          "id": "p1-s1",
+          "page": 1,
+          "text": "In 2024, standard accounts stored up to 30 files. In 2024, export was available. In 2025, standard accounts store up to 40 files. The guide does not state whether export is available for 2025 standard accounts."
+        }
+      ],
+      "expected": {
+        "supported": true,
+        "required_terms": [
+          "2024",
+          "30 files",
+          "export was available"
+        ]
+      },
+      "status": "smoke_checks_passed",
+      "actual": {
+        "supported": true,
+        "answer": "In 2024, standard accounts stored up to 30 files.\n\nIn 2024, export was available.",
+        "evidence": [
+          {
+            "passage_id": "p1-s1",
+            "page": 1,
+            "quote": "In 2024, standard accounts stored up to 30 files."
+          },
+          {
+            "passage_id": "p1-s1",
+            "page": 1,
+            "quote": "In 2024, export was available."
+          }
+        ]
+      },
+      "checks": {
+        "support": true,
+        "terms": true,
+        "exact_sources": true
+      },
+      "model_trace": [
+        {
+          "task": "select_answer",
+          "output": {
+            "explanation": "The question asks for the number of files that can be stored for 2024 standard accounts. The SOURCE DATA contains a sentence (E1) that states: 'In 2024, standard accounts stored up to 30 files.' This directly answers the query with the correct year, account type, and storage capacity. The second part of the original question about export availability is not requested in the focused question, so it is ignored. All required facts are present with the same subject (standard accounts), time period (2024), and certainty (explicit statement).",
+            "sentence_ids": [
+              "E1"
+            ],
+            "status": "answered"
+          },
+          "seconds": 37.474
+        },
+        {
+          "task": "select_answer",
+          "output": {
+            "explanation": "The question asks specifically whether export is available for 2024 standard accounts. The SOURCE DATA contains a sentence (E2) that states 'In 2024, export was available.' This directly answers the question about export availability for 2024 standard accounts, with the same subject (export), time period (2024), and context (standard accounts). The fact is explicitly provided and matches the requested scope. No other facts are needed to answer this specific query.",
+            "sentence_ids": [
+              "E2"
+            ],
+            "status": "answered"
+          },
+          "seconds": 21.931
+        }
+      ]
+    },
+    {
+      "id": "repair-tier-missing",
+      "question": "For standard repairs, what is the usual processing time and what is the fee?",
+      "sources": [
+        {
+          "id": "p1-s1",
+          "page": 1,
+          "text": "Standard repairs usually take 3 to 5 business days. Expedited repairs cost 20 credits. The guide does not state a fee for standard repairs."
+        }
+      ],
+      "expected": {
+        "supported": false,
+        "required_terms": []
+      },
+      "status": "smoke_checks_passed",
+      "actual": {
+        "supported": false,
+        "answer": "",
+        "evidence": []
+      },
+      "checks": {
+        "support": true,
+        "terms": true,
+        "exact_sources": true
+      },
+      "model_trace": [
+        {
+          "task": "select_answer",
+          "output": {
+            "explanation": "The question asks for the usual processing time for standard repairs. The SOURCE DATA contains a sentence (E1) that states 'Standard repairs usually take 3 to 5 business days.' This directly answers the processing time for standard repairs. The fee is not requested in this question, so it is irrelevant. All requested facts are present with the same subject (standard repairs), time period (implied general), and certainty (explicit statement).",
+            "sentence_ids": [
+              "E1"
+            ],
+            "status": "answered"
+          },
+          "seconds": 24.511
+        },
+        {
+          "task": "select_answer",
+          "output": {
+            "explanation": "The question asks specifically for the fee of standard repairs. The SOURCE DATA contains three sentences. Sentence E1 discusses the processing time for standard repairs but does not mention a fee. Sentence E2 mentions a fee for expedited repairs, not standard repairs. Sentence E3 explicitly states that the guide does not state a fee for standard repairs. Therefore, the fee for standard repairs is not provided in the source data. The requested fact (the fee) is missing.",
+            "sentence_ids": [],
+            "status": "missing"
+          },
+          "seconds": 13.685
+        }
+      ]
+    }
+  ],
+  "finished_at": "2026-11-11T17:31:25.341343+00:00"
+}

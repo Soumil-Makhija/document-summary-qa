@@ -24,7 +24,7 @@ Explain the page's main topics briefly, then return sentence_ids in their origin
 
 
 def select_summary(model, passages):
-    """Classify source roles, then select key sentences from domain content.
+    """Exclude assistant-control text, then select substantive key sentences.
 
     The model's explanations are diagnostic traces, never summary wording.
     Classification and importance remain fallible; only provenance is verified.
@@ -42,7 +42,9 @@ def select_summary(model, passages):
     if (not isinstance(roles, dict) or set(roles) != set(catalog)
             or any(not isinstance(value, str) or value not in categories for value in roles.values())):
         raise ModelError("The model returned an invalid source-role classification.")
-    eligible = [source for source in sources if roles[source["id"]] == "document_content"]
+    # A heading and a factual statement can share an extracted sentence. A
+    # mistaken metadata label must not erase that fact before selection.
+    eligible = [source for source in sources if roles[source["id"]] != "assistant_control"]
     if not eligible:
         raise ModelError("The model selected no substantive text on this page. Inspect its source text.")
     schema = {"type": "object", "properties": {

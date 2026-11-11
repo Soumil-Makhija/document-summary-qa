@@ -22,7 +22,7 @@ class _NoRedirect(HTTPRedirectHandler):
 
 
 class Ollama:
-    def __init__(self, base_url="http://127.0.0.1:11434", model="qwen2.5:3b", timeout=120):
+    def __init__(self, base_url="http://127.0.0.1:11434", model="qwen3:4b-instruct", timeout=120):
         try:
             url = urlsplit(base_url)
             port = url.port

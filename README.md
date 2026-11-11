@@ -1,14 +1,14 @@
 # PDF Desk
 
-A local reading desk for text PDFs. Import a document, search its extracted passages, and open matching physical pages in the original PDF. The browser and JSON-producing CLI also offer experimental generated page summaries and question answers.
+A local reading desk for text PDFs. Import a document, search its extracted passages, and open matching physical pages in the original PDF. The browser and JSON-producing CLI also offer model-selected page summaries and source-extract question answers.
 
 ![PDF Desk keyword search with an exact source passage and physical page link](evidence/preview.png)
 
-PDF Desk uses an installed **local Ollama model**, defaulting to `qwen2.5:3b`. It makes no hosted or paid API calls, requires no API key, and never downloads a model automatically. Import, list, keyword search, source-text inspection, and delete work without model access.
+PDF Desk uses an installed **local Ollama model**, defaulting to `qwen3:4b-instruct`. It makes no hosted or paid API calls, requires no API key, and never downloads a model automatically. Import, list, keyword search, source-text inspection, and delete work without model access.
 
 ## Install and open the desk
 
-Requires Python 3.11 or newer. Ollama and a locally installed model are needed for summaries and answers. Install Ollama using its [official installation instructions](https://docs.ollama.com/quickstart), then check `ollama list`. If you choose to download the default model, run `ollama pull qwen2.5:3b` separately. Start the Ollama service if it is not already running.
+Requires Python 3.11 or newer. Ollama and a locally installed model are needed for summaries and answers. Install Ollama using its [official installation instructions](https://docs.ollama.com/quickstart), then check `ollama list`. If you choose to download the default model, run `ollama pull qwen3:4b-instruct` separately. Start the Ollama service if it is not already running.
 
 ```sh
 git clone https://github.com/Soumil-Makhija/document-summary-qa.git
@@ -24,7 +24,7 @@ pdfdesk --data-dir .pdfdesk serve --port 8765
 
 Open **http://127.0.0.1:8765**. The library accepts a chosen or dropped PDF. Select a document and use **Source text → Find words in this PDF** for keyword search and matching passages with direct page links. Search works with Ollama stopped. You can also try **Page summaries** or **Ask the document**, and inspect **Open original**. Every evidence card has the exact extracted quote and an original-page link. The model badge checks availability; readiness is not an inference test.
 
-The included `examples/workshop.pdf` and `examples/research-note.pdf` contain invented policies and fictional research data. They are test fixtures, not real organizational guidance or scientific evidence. The workshop guide deliberately includes an untrusted instruction to exercise prompt-injection behavior.
+The included `examples/workshop.pdf`, `examples/research-note.pdf`, and `examples/holdout-harborline.pdf` contain invented policies and fictional research data. They are test fixtures, not real organizational guidance or scientific evidence. The workshop and Harborline guides deliberately include untrusted instructions to exercise prompt-injection behavior.
 
 ## CLI
 
@@ -40,7 +40,7 @@ pdfdesk --data-dir .pdfdesk ask DOCUMENT_ID \
 pdfdesk --data-dir .pdfdesk delete DOCUMENT_ID
 
 # Select a different already-installed local model or Ollama port.
-pdfdesk --data-dir .pdfdesk --model qwen2.5:3b \
+pdfdesk --data-dir .pdfdesk --model qwen3:4b-instruct \
   --ollama-url http://127.0.0.1:11434 serve --port 8765
 ```
 
@@ -52,7 +52,7 @@ The equivalent environment defaults are `PDFDESK_DATA_DIR`, `PDFDESK_MODEL`, and
 
 **Page summaries are extractive.** The model first classifies sentence roles, then selects up to six key source sentences per page batch. The app restores their exact original wording as the summary and cited key points; it does not invent paraphrased claims. Every page with text is processed in batches of up to five passages, and long-page batches remain under the same physical page number. Empty pages remain in the source view and produce warnings. A page with no eligible source sentences fails explicitly.
 
-**Question answers are source extracts.** Explicit clauses joined by “and” followed by a question word are split using their original wording. Other questions reach the model unchanged. The model selects sentence identifiers and reports whether each clause has enough source support; all clauses must be supported before the app returns their exact quotes. There is no model-written question plan that can replace a qualifier. The source decision can still be wrong or falsely abstain.
+**Question answers are source extracts.** Explicit clauses joined by “and” followed by a question word are split using their original wording. Each focused clause also receives the full original question so that shared subjects, dates, tiers, and conditions remain available. Other questions reach the model unchanged. The model selects sentence identifiers and reports whether each clause has enough source support; all clauses must be supported before the app returns their exact quotes. There is no model-written question plan that can replace a qualifier. The source decision can still be wrong or falsely abstain.
 
 Every citation includes `passage_id`, `page`, `quote`, and `url`. The service verifies the quote is an exact substring of its indexed passage and derives the physical page from that passage. Whitespace is normalized during extraction, so line wrapping and spacing can differ from the visual PDF. Page numbers are **1-based physical PDF order**, independent of printed section or page labels. Links use `/api/documents/ID/file#page=N`; their navigation behavior also depends on the browser's PDF viewer.
 
@@ -76,7 +76,7 @@ Document text is sent to the configured local Ollama process for inference. The 
 | Small-document fallback | When lexical search finds nothing and the document has at most 12 passages, use all of them |
 | Browser inference | One active request; a concurrent request receives HTTP 429 rather than waiting in an unbounded model queue |
 
-Lexical retrieval can miss paraphrases, distributed evidence, or facts outside its top results. There are no embeddings or external knowledge searches. Summary generation and review make several model calls and may be slow on CPU; each model HTTP call has a 120-second timeout.
+Lexical retrieval can miss paraphrases, distributed evidence, or facts outside its top results. There are no embeddings or external knowledge searches. Summaries use two model calls per page batch and can take several minutes, especially on CPU. Each model HTTP call has a 120-second timeout.
 
 Supported input is an unencrypted, digitally authored text PDF. Strict PDF parsing can reject files that a tolerant viewer opens. Malformed, encrypted, page-less, oversized, and entirely image-only files are rejected. Mixed text/image documents retain empty-page numbering and show warnings. There is no OCR. Existing OCR layers can contain errors; tables, multiple columns, equations, headings, and reading order may extract imperfectly. See [pypdf's text-extraction explanation](https://pypdf.readthedocs.io/en/6.1.3/user/extract-text.html) for the underlying constraints. File and text caps are not a hard process-memory sandbox for PDF decompression.
 
@@ -99,6 +99,8 @@ The browser uses these routes. Responses are JSON except static assets and the o
 | POST | `/api/documents/ID/summary` | JSON `{}`; generated page summaries and cited key points |
 | POST | `/api/documents/ID/answer` | JSON `{"question":"…"}`; support decision, source-extract answer, evidence and retrieved passages |
 
+Search accepts exactly one nonblank `q` parameter of at most 2,000 characters. For an extractive summary, `kind` is `extractive_summary`, each key-point `text` equals its cited source quote, and the page summary joins the selected key points in source order.
+
 The server requires `Content-Length` for POSTs, allows up to 32 KiB for JSON bodies, and rejects transfer-encoded bodies. Failures have an `error` string: 400 for invalid input, 403 for rejected Host/Origin, 404 for missing routes/documents, 413 for excessive request size, 429 for a busy model, and 502 for model access or validation errors. Unexpected internal failures return a generic 500 without private exception details.
 
 ## Tests and real-model evaluation
@@ -110,7 +112,7 @@ node tools/test_ui_state.cjs
 
 # Uses the installed model and real synthetic PDFs; can take several minutes.
 python tools/evaluate_live.py --base-url http://127.0.0.1:11434 \
-  --model qwen2.5:3b --output tmp/evidence/live.json
+  --model qwen3:4b-instruct --output tmp/evidence/live.json
 ```
 
 Unit tests exercise real PDF extraction/storage, request protections and CLI behavior, with deterministic fake model responses for model-dependent assertions. GitHub Actions is configured for Ubuntu Python 3.11 and 3.14 and does not download or invoke a hosted model. Loopback integration tests need permission to open local sockets.
@@ -119,7 +121,7 @@ CI also builds a wheel, installs it into a fresh virtual environment, and runs `
 
 The live evaluator imports both public PDFs into a temporary persistent store, checks restart/deletion behavior, generates page summaries, and runs the manifest's supported, unsupported, multipart, qualifier, and hostile-annotation questions. It checkpoints genuine outputs, model traces, code/fixture fingerprints and citation checks to the chosen JSON file. Exit 0 means automated smoke checks passed **with manual review still required**; 1 means a failed/interrupted run; 2 means model access is blocked. Inspect the report's `status`, individual checks, outputs and review assessments. A partially completed report is useful evidence, not a successful evaluation.
 
-**November 11 build:** extractive summaries now return all eight pages of the two original fixtures, with 207 page/citation checks passing and manual review recorded in [summary evidence](evidence/summary-review-2026-11-11.md). The new question workflow and a fresh independent fixture are undergoing real-model validation. Historical November 9 failures remain in [the earlier review](evidence/model-review-2026-11-09.md). This paragraph will be updated with the final build results.
+**November 11 checkpoint:** 76 automated tests pass. Model-selected summaries cover all 12 pages of the three synthetic fixtures, and the original 16 question cases pass. The new document exposed a remaining ambiguity: after shared question context was added, a missing-fee compound question was marked supported even though its wording does not establish a clear fee. This is recorded in [the targeted review](evidence/holdout-review-2026-11-11-scope.md). The project remains in progress; the next small increment is conservative handling of ambiguous or unspecified values and final browser AI validation. Historical failed runs are retained rather than presented as successful evaluations.
 
 Do not infer a model accuracy rate from these examples: they are a small synthetic regression set used during development, not an untouched holdout, and substring/citation checks do not prove factual entailment.
 

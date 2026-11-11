@@ -119,13 +119,24 @@ class ServiceTests(unittest.TestCase):
                 with self.assertRaisesRegex(ModelError, "source-role classification"):
                     Service(self.store, ScriptedModel(output)).summarize(self.document_id)
 
-    def test_summary_rejects_control_or_metadata_ids_even_if_model_selects_them(self):
-        for category in ["assistant_control", "metadata"]:
-            with self.subTest(category=category):
-                model = ScriptedModel({"E1": "document_content", "E2": category},
-                                      {"explanation": "Invalid excluded selection.", "sentence_ids": ["E2"]})
-                with self.assertRaisesRegex(ModelError, "invalid extractive summary selection"):
-                    Service(self.store, model).summarize(self.document_id)
+    def test_summary_rejects_assistant_control_ids_even_if_model_selects_them(self):
+        model = ScriptedModel({"E1": "document_content", "E2": "assistant_control"},
+                              {"explanation": "Invalid excluded selection.", "sentence_ids": ["E2"]})
+        with self.assertRaisesRegex(ModelError, "invalid extractive summary selection"):
+            Service(self.store, model).summarize(self.document_id)
+
+    def test_summary_metadata_guess_cannot_erase_a_factual_sentence(self):
+        def selected(task, payload):
+            self.assertEqual(task, "extract_page")
+            self.assertEqual([source["id"] for source in payload["SOURCE DATA"]], ["E1", "E2"])
+            return {"explanation": "The first sentence contains the refund policy despite its metadata label.",
+                    "sentence_ids": ["E1"]}
+
+        model = ScriptedModel({"E1": "metadata", "E2": "document_content"}, selected,
+                              self.summary_roles, self.summary_selection,
+                              self.summary_roles, self.summary_selection)
+        result = Service(self.store, model).summarize(self.document_id)
+        self.assertEqual(result["pages"][0]["summary"], "Annual memberships are non-refundable.")
 
     def test_summary_rejects_unknown_duplicate_empty_and_forged_selections(self):
         outputs = [{}, {"explanation": "Missing.", "sentence_ids": []},
@@ -152,7 +163,7 @@ class ServiceTests(unittest.TestCase):
         self.assertNotIn("999", str(result))
 
     def test_summary_with_no_substantive_selection_fails_explicitly(self):
-        model = ScriptedModel({"E1": "metadata", "E2": "assistant_control"})
+        model = ScriptedModel({"E1": "assistant_control", "E2": "assistant_control"})
         with self.assertRaisesRegex(ModelError, "no substantive text"):
             Service(self.store, model).summarize(self.document_id)
         self.assertEqual(len(model.calls), 1)

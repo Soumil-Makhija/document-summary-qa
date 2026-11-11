@@ -1,0 +1,507 @@
+{
+  "status": "smoke_checks_passed_manual_review_required",
+  "scope": "Targeted original compound cases; not the complete suite",
+  "model": "qwen3:4b-instruct",
+  "started_at": "2026-11-11T17:26:31.874798+00:00",
+  "planned_case_ids": [
+    "workshop-multipage",
+    "workshop-tier-qualifiers",
+    "research-multipage"
+  ],
+  "manifest_sha256": "ac769a814c57491b71fbf62aed0d5f638acddfa47df452237236e04c88b848f9",
+  "code_sha256": {
+    "pdfdesk/core.py": "0fc502345b811300a6a8dc258abf85f4d65cdd82b09e00e2f91cd4650c64b537",
+    "pdfdesk/model.py": "3e5652ef9635897ff78eb7a58138955f04ce3dd0606e40f689afdd336ff65d74",
+    "pdfdesk/service.py": "1d464950af6c6519de6c13c1e53294984ac0f5c8afb7ba1d9ba3077332764979",
+    "pdfdesk/selection.py": "15deeb2b2fbc4769676c4fc800312df9b4d9adc8e09cf3b02f26bec4b9a49668",
+    "pdfdesk/summary.py": "b06339e3072ea6e905df07929f884418a7a74a2ce5fc50cffb4f75c340fc78e7",
+    "tools/evaluate_compounds.py": "eb0f80b24b1512f9ec53f6695125416e9181eb024f1fe7ddd210a529b120a3b7"
+  },
+  "cases": [
+    {
+      "id": "workshop-multipage",
+      "expected": {
+        "id": "workshop-multipage",
+        "document": "workshop.pdf",
+        "question": "How do I export a design, and are annual memberships refundable?",
+        "supported": true,
+        "required_pages": [
+          1,
+          2
+        ],
+        "required_terms": [
+          "designs",
+          "download",
+          "svg",
+          "non-refundable"
+        ],
+        "forbidden_terms": []
+      },
+      "actual": {
+        "document_id": "31bd89241e9c46f4be30f65a1fcf9930",
+        "question": "How do I export a design, and are annual memberships refundable?",
+        "model": "qwen3:4b-instruct",
+        "kind": "source_extract",
+        "supported": true,
+        "answer": "Export a design To export a design, open Designs, choose Download, and select SVG.\n\nJUNIPER WORKSHOP / MEMBER GUIDE Membership & access A compact reference for Juniper Workshop members Annual membership policy Annual Juniper Workshop memberships are non-refundable.",
+        "evidence": [
+          {
+            "passage_id": "p2-s1",
+            "page": 2,
+            "quote": "Export a design To export a design, open Designs, choose Download, and select SVG.",
+            "url": "/api/documents/31bd89241e9c46f4be30f65a1fcf9930/file#page=2"
+          },
+          {
+            "passage_id": "p1-s1",
+            "page": 1,
+            "quote": "JUNIPER WORKSHOP / MEMBER GUIDE Membership & access A compact reference for Juniper Workshop members Annual membership policy Annual Juniper Workshop memberships are non-refundable.",
+            "url": "/api/documents/31bd89241e9c46f4be30f65a1fcf9930/file#page=1"
+          }
+        ],
+        "retrieved": [
+          {
+            "id": "p1-s1",
+            "page": 1,
+            "text": "JUNIPER WORKSHOP / MEMBER GUIDE Membership & access A compact reference for Juniper Workshop members Annual membership policy Annual Juniper Workshop memberships are non-refundable. Annual memberships include access to the shared workroom. Synthetic policy fixture. All organization names, policies, and values in this guide are invented for software testing. PDFDesk | Synthetic public test fixture PDF page 1 of 5",
+            "score": 5.56965
+          },
+          {
+            "id": "p2-s1",
+            "page": 2,
+            "text": "JUNIPER WORKSHOP / MEMBER GUIDE Designs & downloads Section 12 - document heading, not a PDF page number Revision retention Juniper Workshop retains design revisions for 18 days. Export a design To export a design, open Designs, choose Download, and select SVG. Downloaded designs are saved to the member's computer. Page provenance follows the physical PDF order. This is PDF page 2; the section number above does not change that order. PDFDesk | Synthetic public test fixture PDF page 2 of 5",
+            "score": 3.428819
+          }
+        ],
+        "notice": "The model selects original source sentences. Provenance is verified; relevance and completeness remain fallible."
+      },
+      "checks": [
+        {
+          "name": "selected-document",
+          "passed": true,
+          "detail": "The response must belong to the PDF selected by the case."
+        },
+        {
+          "name": "support-decision",
+          "passed": true,
+          "detail": "Expected supported=True for every requested part."
+        },
+        {
+          "name": "answer-present",
+          "passed": true,
+          "detail": "Return an answer or explicit abstention text."
+        },
+        {
+          "name": "required-substring:designs",
+          "passed": true,
+          "detail": "Literal lowercase substring smoke check; not semantic entailment."
+        },
+        {
+          "name": "required-substring:download",
+          "passed": true,
+          "detail": "Literal lowercase substring smoke check; not semantic entailment."
+        },
+        {
+          "name": "required-substring:svg",
+          "passed": true,
+          "detail": "Literal lowercase substring smoke check; not semantic entailment."
+        },
+        {
+          "name": "required-substring:non-refundable",
+          "passed": true,
+          "detail": "Literal lowercase substring smoke check; not semantic entailment."
+        },
+        {
+          "name": "required-physical-page:1",
+          "passed": true,
+          "detail": "Expected supporting physical page must be cited."
+        },
+        {
+          "name": "required-physical-page:2",
+          "passed": true,
+          "detail": "Expected supporting physical page must be cited."
+        },
+        {
+          "name": "supported-has-evidence",
+          "passed": true,
+          "detail": "A supported answer needs resolved quotes."
+        },
+        {
+          "name": "citation:0:exact-page-quote",
+          "passed": true,
+          "detail": "Quote must be an exact substring of the indexed passage and physical PDF page in this document."
+        },
+        {
+          "name": "citation:0:original-pdf-link",
+          "passed": true,
+          "detail": "Citation link must identify this original PDF and its physical page."
+        },
+        {
+          "name": "citation:1:exact-page-quote",
+          "passed": true,
+          "detail": "Quote must be an exact substring of the indexed passage and physical PDF page in this document."
+        },
+        {
+          "name": "citation:1:original-pdf-link",
+          "passed": true,
+          "detail": "Citation link must identify this original PDF and its physical page."
+        },
+        {
+          "name": "answer-matches-source-extracts",
+          "passed": true,
+          "detail": "A source-extract answer must contain the resolved quotes verbatim."
+        }
+      ],
+      "passed": true,
+      "model_trace": [
+        {
+          "task": "select_answer",
+          "output": {
+            "explanation": "The question 'How do I export a design' requests a procedure for exporting a design. The SOURCE DATA contains a sentence (E7) that directly states: 'To export a design, open Designs, choose Download, and select SVG.' This sentence provides the exact steps needed to answer the question. The procedure is explicit, specific, and matches the subject and context of the original question. No other facts are needed to answer this part of the question.",
+            "sentence_ids": [
+              "E7"
+            ],
+            "status": "answered"
+          },
+          "seconds": 23.862
+        },
+        {
+          "task": "select_answer",
+          "output": {
+            "explanation": "The question asks whether annual memberships are refundable. The source data contains the sentence: 'Annual Juniper Workshop memberships are non-refundable.' This directly answers the question with a clear, explicit statement. The fact is present, specific to annual memberships, and matches the subject and context of the question. No other facts are needed to answer this part of the question.",
+            "sentence_ids": [
+              "E1"
+            ],
+            "status": "answered"
+          },
+          "seconds": 34.196
+        }
+      ]
+    },
+    {
+      "id": "workshop-tier-qualifiers",
+      "expected": {
+        "id": "workshop-tier-qualifiers",
+        "document": "workshop.pdf",
+        "question": "How long do standard repair approvals usually take, and how long do expedited repair approvals usually take?",
+        "supported": true,
+        "required_pages": [
+          3
+        ],
+        "required_terms": [
+          "standard",
+          "2",
+          "4",
+          "business",
+          "expedited",
+          "1"
+        ],
+        "forbidden_terms": []
+      },
+      "actual": {
+        "document_id": "31bd89241e9c46f4be30f65a1fcf9930",
+        "question": "How long do standard repair approvals usually take, and how long do expedited repair approvals usually take?",
+        "model": "qwen3:4b-instruct",
+        "kind": "source_extract",
+        "supported": true,
+        "answer": "JUNIPER WORKSHOP / MEMBER GUIDE Repair approvals Two service tiers, with typical processing times Standard tier Standard repair approvals usually take between 2 and 4 business days.\n\nExpedited tier Expedited repair approvals usually take 1 business day.",
+        "evidence": [
+          {
+            "passage_id": "p3-s1",
+            "page": 3,
+            "quote": "JUNIPER WORKSHOP / MEMBER GUIDE Repair approvals Two service tiers, with typical processing times Standard tier Standard repair approvals usually take between 2 and 4 business days.",
+            "url": "/api/documents/31bd89241e9c46f4be30f65a1fcf9930/file#page=3"
+          },
+          {
+            "passage_id": "p3-s1",
+            "page": 3,
+            "quote": "Expedited tier Expedited repair approvals usually take 1 business day.",
+            "url": "/api/documents/31bd89241e9c46f4be30f65a1fcf9930/file#page=3"
+          }
+        ],
+        "retrieved": [
+          {
+            "id": "p3-s1",
+            "page": 3,
+            "text": "JUNIPER WORKSHOP / MEMBER GUIDE Repair approvals Two service tiers, with typical processing times Standard tier Standard repair approvals usually take between 2 and 4 business days. Expedited tier Expedited repair approvals usually take 1 business day. Standard and expedited approvals are different service tiers. Synthetic policy fixture. Preserve the service tier and the word 'usually' when quoting or summarizing these statements. PDFDesk | Synthetic public test fixture PDF page 3 of 5",
+            "score": 15.320927
+          }
+        ],
+        "notice": "The model selects original source sentences. Provenance is verified; relevance and completeness remain fallible."
+      },
+      "checks": [
+        {
+          "name": "selected-document",
+          "passed": true,
+          "detail": "The response must belong to the PDF selected by the case."
+        },
+        {
+          "name": "support-decision",
+          "passed": true,
+          "detail": "Expected supported=True for every requested part."
+        },
+        {
+          "name": "answer-present",
+          "passed": true,
+          "detail": "Return an answer or explicit abstention text."
+        },
+        {
+          "name": "required-substring:standard",
+          "passed": true,
+          "detail": "Literal lowercase substring smoke check; not semantic entailment."
+        },
+        {
+          "name": "required-substring:2",
+          "passed": true,
+          "detail": "Literal lowercase substring smoke check; not semantic entailment."
+        },
+        {
+          "name": "required-substring:4",
+          "passed": true,
+          "detail": "Literal lowercase substring smoke check; not semantic entailment."
+        },
+        {
+          "name": "required-substring:business",
+          "passed": true,
+          "detail": "Literal lowercase substring smoke check; not semantic entailment."
+        },
+        {
+          "name": "required-substring:expedited",
+          "passed": true,
+          "detail": "Literal lowercase substring smoke check; not semantic entailment."
+        },
+        {
+          "name": "required-substring:1",
+          "passed": true,
+          "detail": "Literal lowercase substring smoke check; not semantic entailment."
+        },
+        {
+          "name": "required-physical-page:3",
+          "passed": true,
+          "detail": "Expected supporting physical page must be cited."
+        },
+        {
+          "name": "supported-has-evidence",
+          "passed": true,
+          "detail": "A supported answer needs resolved quotes."
+        },
+        {
+          "name": "citation:0:exact-page-quote",
+          "passed": true,
+          "detail": "Quote must be an exact substring of the indexed passage and physical PDF page in this document."
+        },
+        {
+          "name": "citation:0:original-pdf-link",
+          "passed": true,
+          "detail": "Citation link must identify this original PDF and its physical page."
+        },
+        {
+          "name": "citation:1:exact-page-quote",
+          "passed": true,
+          "detail": "Quote must be an exact substring of the indexed passage and physical PDF page in this document."
+        },
+        {
+          "name": "citation:1:original-pdf-link",
+          "passed": true,
+          "detail": "Citation link must identify this original PDF and its physical page."
+        },
+        {
+          "name": "answer-matches-source-extracts",
+          "passed": true,
+          "detail": "A source-extract answer must contain the resolved quotes verbatim."
+        }
+      ],
+      "passed": true,
+      "model_trace": [
+        {
+          "task": "select_answer",
+          "output": {
+            "explanation": "The question asks for the typical duration of standard repair approvals. The SOURCE DATA contains a sentence (E1) that explicitly states: 'Standard repair approvals usually take between 2 and 4 business days.' This directly answers the focused question with the correct subject ('standard repair approvals'), the time frame ('usually'), and the duration ('between 2 and 4 business days'). All required facts are present, with the same subject, time period, and certainty as the original question. The sentence is specific and unambiguous, and it matches the original wording in scope and condition.",
+            "sentence_ids": [
+              "E1"
+            ],
+            "status": "answered"
+          },
+          "seconds": 25.06
+        },
+        {
+          "task": "select_answer",
+          "output": {
+            "explanation": "The question asks specifically about how long expedited repair approvals usually take. The SOURCE DATA contains a sentence (E2) that states: 'Expedited tier Expedited repair approvals usually take 1 business day.' This directly answers the focused question with the correct subject ('expedited repair approvals'), the time period ('1 business day'), and retains the word 'usually' as required by the source. The fact is explicitly provided with the same subject and certainty as the question. No additional facts are needed to answer this specific clause.",
+            "sentence_ids": [
+              "E2"
+            ],
+            "status": "answered"
+          },
+          "seconds": 31.297
+        }
+      ]
+    },
+    {
+      "id": "research-multipage",
+      "expected": {
+        "id": "research-multipage",
+        "document": "research-note.pdf",
+        "question": "What was the fictional sample size, and what were the checklist and control group mean task times?",
+        "supported": true,
+        "required_pages": [
+          1,
+          2
+        ],
+        "required_terms": [
+          "24",
+          "14",
+          "18",
+          "minutes"
+        ],
+        "forbidden_terms": []
+      },
+      "actual": {
+        "document_id": "36a8ed3120df412a9aa3a44806ce8079",
+        "question": "What was the fictional sample size, and what were the checklist and control group mean task times?",
+        "model": "qwen3:4b-instruct",
+        "kind": "source_extract",
+        "supported": true,
+        "answer": "Participants and allocation The fictional sample contains 24 adult volunteers.\n\nRESEARCH NOTE / INVENTED DATA Illustrative results Synthetic research note - descriptive fixture values Task time In the fictional fixture, the checklist group mean task time was 14 minutes and the control group mean task time was 18 minutes.",
+        "evidence": [
+          {
+            "passage_id": "p1-s1",
+            "page": 1,
+            "quote": "Participants and allocation The fictional sample contains 24 adult volunteers.",
+            "url": "/api/documents/36a8ed3120df412a9aa3a44806ce8079/file#page=1"
+          },
+          {
+            "passage_id": "p2-s1",
+            "page": 2,
+            "quote": "RESEARCH NOTE / INVENTED DATA Illustrative results Synthetic research note - descriptive fixture values Task time In the fictional fixture, the checklist group mean task time was 14 minutes and the control group mean task time was 18 minutes.",
+            "url": "/api/documents/36a8ed3120df412a9aa3a44806ce8079/file#page=2"
+          }
+        ],
+        "retrieved": [
+          {
+            "id": "p2-s1",
+            "page": 2,
+            "text": "RESEARCH NOTE / INVENTED DATA Illustrative results Synthetic research note - descriptive fixture values Task time In the fictional fixture, the checklist group mean task time was 14 minutes and the control group mean task time was 18 minutes. The observed mean difference was 4 minutes, with the checklist group faster. Task completion In the fictional fixture, 10 of 12 checklist-group participants completed the practice task, compared with 9 of 12 control-group participants. These are descriptive, synthetic values. No confidence intervals, significance tests, or uncertainty estimates are reported. PDFDesk | Synthetic public test fixture PDF page 2 of 3",
+            "score": 4.259599
+          },
+          {
+            "id": "p1-s1",
+            "page": 1,
+            "text": "RESEARCH NOTE / INVENTED DATA A checklist practice task Synthetic research note - fictional data, not a real study Purpose This synthetic research note describes an invented one-session practice task. It is a software-testing fixture, not evidence from an actual study. Participants and allocation The fictional sample contains 24 adult volunteers. Participants were randomized in the fixture: 12 to a checklist group and 12 to a control group. Both groups attempted the same practice task. All participants, measurements, and results in this note are invented. Do not present them as findings about real people. PDFDesk | Synthetic public test fixture PDF page 1 of 3",
+            "score": 3.056716
+          },
+          {
+            "id": "p3-s1",
+            "page": 3,
+            "text": "RESEARCH NOTE / INVENTED DATA Scope & limitations Synthetic research note - interpretation boundaries What was not measured The fictional task lasted one session. Long-term retention was not measured. Performance in real workplaces was not measured. The fixture reports no blinded assessment. Interpretation The invented group difference does not establish a real-world causal effect. This fixture does not support a guaranteed improvement or a conclusion about performance after six months. Any explanation beyond these descriptive statements is generated interpretation and must be labeled separately from the document's facts. PDFDesk | Synthetic public test fixture PDF page 3 of 3",
+            "score": 0.337523
+          }
+        ],
+        "notice": "The model selects original source sentences. Provenance is verified; relevance and completeness remain fallible."
+      },
+      "checks": [
+        {
+          "name": "selected-document",
+          "passed": true,
+          "detail": "The response must belong to the PDF selected by the case."
+        },
+        {
+          "name": "support-decision",
+          "passed": true,
+          "detail": "Expected supported=True for every requested part."
+        },
+        {
+          "name": "answer-present",
+          "passed": true,
+          "detail": "Return an answer or explicit abstention text."
+        },
+        {
+          "name": "required-substring:24",
+          "passed": true,
+          "detail": "Literal lowercase substring smoke check; not semantic entailment."
+        },
+        {
+          "name": "required-substring:14",
+          "passed": true,
+          "detail": "Literal lowercase substring smoke check; not semantic entailment."
+        },
+        {
+          "name": "required-substring:18",
+          "passed": true,
+          "detail": "Literal lowercase substring smoke check; not semantic entailment."
+        },
+        {
+          "name": "required-substring:minutes",
+          "passed": true,
+          "detail": "Literal lowercase substring smoke check; not semantic entailment."
+        },
+        {
+          "name": "required-physical-page:1",
+          "passed": true,
+          "detail": "Expected supporting physical page must be cited."
+        },
+        {
+          "name": "required-physical-page:2",
+          "passed": true,
+          "detail": "Expected supporting physical page must be cited."
+        },
+        {
+          "name": "supported-has-evidence",
+          "passed": true,
+          "detail": "A supported answer needs resolved quotes."
+        },
+        {
+          "name": "citation:0:exact-page-quote",
+          "passed": true,
+          "detail": "Quote must be an exact substring of the indexed passage and physical PDF page in this document."
+        },
+        {
+          "name": "citation:0:original-pdf-link",
+          "passed": true,
+          "detail": "Citation link must identify this original PDF and its physical page."
+        },
+        {
+          "name": "citation:1:exact-page-quote",
+          "passed": true,
+          "detail": "Quote must be an exact substring of the indexed passage and physical PDF page in this document."
+        },
+        {
+          "name": "citation:1:original-pdf-link",
+          "passed": true,
+          "detail": "Citation link must identify this original PDF and its physical page."
+        },
+        {
+          "name": "answer-matches-source-extracts",
+          "passed": true,
+          "detail": "A source-extract answer must contain the resolved quotes verbatim."
+        }
+      ],
+      "passed": true,
+      "model_trace": [
+        {
+          "task": "select_answer",
+          "output": {
+            "explanation": "The question asks for the fictional sample size. The SOURCE DATA contains a sentence (E9) that states: 'The fictional sample contains 24 adult volunteers.' This directly answers the question about the fictional sample size. The other elements in the question—checklist and control group mean task times—are not requested in this focused clause. The focus is solely on the sample size, and this fact is explicitly provided in the source with the same subject (fictional sample), context (fictional fixture), and certainty (invented data). Thus, all required facts are present and directly relevant.",
+            "sentence_ids": [
+              "E9"
+            ],
+            "status": "answered"
+          },
+          "seconds": 30.875
+        },
+        {
+          "task": "select_answer",
+          "output": {
+            "explanation": "The question asks for the checklist and control group mean task times. In the SOURCE DATA, sentence E1 states: 'In the fictional fixture, the checklist group mean task time was 14 minutes and the control group mean task time was 18 minutes.' This directly provides the requested values for both groups. The subject (task time), the groups (checklist and control), and the values (14 minutes and 18 minutes) are explicitly stated in the same passage (E1), with no ambiguity or missing data. The original question's focus is fully answered by this sentence.",
+            "sentence_ids": [
+              "E1"
+            ],
+            "status": "answered"
+          },
+          "seconds": 43.258
+        }
+      ]
+    }
+  ],
+  "manual_review_required": true,
+  "finished_at": "2026-11-11T17:29:40.645560+00:00"
+}

@@ -1,3 +1,7 @@
+# Latest checkpoint — November 11, 2026
+
+See [checkpoint-2026-11-11.md](checkpoint-2026-11-11.md) for the current tested increment and remaining work. The project remains in progress. New evaluation reports preserve both successful mechanical checks and failed/manual findings; they are development regressions, not accuracy benchmarks.
+
 # Validation evidence
 
 The November 9 build delivers model-free PDF import, source inspection, keyword search with physical-page links, and deletion through the browser, CLI, and local HTTP API.

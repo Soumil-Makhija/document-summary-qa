@@ -34,9 +34,9 @@ from pdfdesk.service import ABSTENTION, Service  # noqa: E402
 DISCLAIMER = (
     "Automated checks inspect support decisions, literal substring presence, physical-page "
     "coverage, and exact quote/citation resolution. They are smoke checks, not an accuracy "
-    "score, proof of entailment, or independent factual grounding. The same local model "
-    "generates and reviews wording. Manually inspect every generated summary, answer, "
-    "selected passage, and grounding-review output. This small synthetic set is not an "
+    "score, proof of entailment, or independent factual grounding. The local model "
+    "classifies and selects source sentences. Manually inspect every summary, answer, "
+    "selected passage, and model decision. This small synthetic set is not an "
     "untouched holdout and says nothing about arbitrary contracts or research papers."
 )
 
@@ -189,10 +189,10 @@ def run_evaluation(base_url, model_name, output):
     report = {
         "schema_version": 1, "started_at": _now(), "updated_at": _now(), "status": "running",
         "manual_review_required": True, "manual_review_caveat": DISCLAIMER,
-        "scope": "Real local model generation and review against two public synthetic PDFs.",
+        "scope": "Real local model sentence selection against two public synthetic PDFs.",
         "model": {"provider": "local Ollama", "base_url": base_url, "name": model_name},
         "application_code_sha256": {name: hashlib.sha256((ROOT / name).read_bytes()).hexdigest()
-                                    for name in ["pdfdesk/core.py", "pdfdesk/model.py", "pdfdesk/service.py", "tools/evaluate_live.py"]},
+                                    for name in ["pdfdesk/core.py", "pdfdesk/model.py", "pdfdesk/service.py", "pdfdesk/selection.py", "pdfdesk/summary.py", "tools/evaluate_live.py"]},
         "documents": [], "lifecycle_checks": [], "summaries": [], "cases": [],
     }
 
@@ -319,7 +319,7 @@ def exit_code(report):
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--base-url", default="http://127.0.0.1:11434")
-    parser.add_argument("--model", default="qwen2.5:3b")
+    parser.add_argument("--model", default="qwen3:4b-instruct")
     parser.add_argument("--output", type=Path, default=Path("evidence/live.json"))
     args = parser.parse_args(argv)
     report = run_evaluation(args.base_url, args.model, args.output)

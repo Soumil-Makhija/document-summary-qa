@@ -110,7 +110,7 @@ class ModelTests(unittest.TestCase):
         self.assertEqual(model.chat("plan", schema, "A controlled instruction.", {"private-source": "fixture"}), output)
         request = model.opener.open.call_args.args[0]
         body = json.loads(request.data)
-        self.assertEqual(body["model"], "qwen2.5:3b")
+        self.assertEqual(body["model"], "qwen3:4b-instruct")
         self.assertFalse(body["stream"])
         self.assertEqual(body["format"], schema)
         self.assertEqual(body["options"]["temperature"], 0)

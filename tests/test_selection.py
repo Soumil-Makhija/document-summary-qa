@@ -40,6 +40,7 @@ class SelectionTests(unittest.TestCase):
         result = select_answer(model, question, self.passages)
         self.assertEqual([call["QUESTION"] for call in model.calls],
                          ["How do I export a design", "are annual memberships refundable?"])
+        self.assertEqual([call["ORIGINAL QUESTION"] for call in model.calls], [question, question])
         self.assertEqual([item["page"] for item in result], [2, 1])
         for item in result:
             passage = next(p for p in self.passages if p["id"] == item["passage_id"])
@@ -52,6 +53,26 @@ class SelectionTests(unittest.TestCase):
                 model = FakeModel(MISSING)
                 self.assertIsNone(select_answer(model, question, self.passages))
                 self.assertEqual(model.calls[0]["QUESTION"], question)
+                self.assertNotIn("ORIGINAL QUESTION", model.calls[0])
+
+    def test_later_clause_receives_shared_subject_time_and_tier_scope(self):
+        question = "For 2025 standard accounts, what is the storage allowance and is export available?"
+        model = FakeModel(answered("E1"), answered("E2"))
+
+        select_answer(model, question, self.passages)
+
+        self.assertEqual([call["QUESTION"] for call in model.calls],
+                         ["For 2025 standard accounts, what is the storage allowance", "is export available?"])
+        self.assertEqual([call["ORIGINAL QUESTION"] for call in model.calls], [question, question])
+
+    def test_later_clause_keeps_original_context_when_a_pronoun_is_used(self):
+        question = "For monthly memberships, what access is included and are they refundable?"
+        model = FakeModel(answered("E1"), MISSING)
+
+        self.assertIsNone(select_answer(model, question, self.passages))
+
+        self.assertEqual(model.calls[1]["QUESTION"], "are they refundable?")
+        self.assertEqual(model.calls[1]["ORIGINAL QUESTION"], question)
 
     def test_one_missing_clause_returns_no_partial_supported_answer(self):
         model = FakeModel(answered("E2"), MISSING)

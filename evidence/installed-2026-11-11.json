@@ -1,0 +1,12 @@
+{
+  "passed": true,
+  "scope": "Fresh wheel installation; no model inference",
+  "checks": [
+    "installed CLI imports, lists, and reopens all three physical pages",
+    "installed CLI searches exact source passages with physical-page links",
+    "wheel includes HTML, JavaScript, and CSS served by the installed app",
+    "installed HTTP app reuses the persisted library and exact original PDF",
+    "installed HTTP search agrees with the CLI and handles no matches",
+    "installed CLI deletes the indexed document and its original copy"
+  ]
+}
